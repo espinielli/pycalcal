@@ -8888,7 +8888,7 @@ clean:
 		pycalcal.idx *UnitTest.py *UnitTest_result.txt \
 		html/ calendrica/ pycalcal*.gz figure.mpx \
 		$$(ls | grep  "figure.[0-9][0-9]*") figure-*.pdf fig_*.pdf \
-		*.mps *mpx fig_*.0 SConstruct
+		*.mps *mpx fig_*.0 SConstruct testSunset.cl
 
 # ask to remove all files not recognized by hg
 xclean: clean
@@ -9171,12 +9171,17 @@ mpf('279283278.7852416')
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Version control}
-I stored my code in google code repo, \url{http://code.google.com/p/pycalcal/},
+My code is now at \url{http://espinielli.github.com/pycalcal}. As you can guess
+from the URL, it is on \href{http://github.com}{GitHub} and I use
+\texttt{git}. 
+
+\chapter{Old Version control}
+I used to store my code in google code repo, \url{http://code.google.com/p/pycalcal/},
 based on Mercurial version control system.
 For an introduction to Mercurial read the excellent tutorial from Joel Spolsky
 at \url{http://hginit.com/index.html}.
 
-Usual commands I use:
+Usual commands I used:
 \begin{verbatim}
 $ cd <my repo>
 $ hg status    # to see what has changed
@@ -9184,6 +9189,7 @@ $ hg add file1 # to add a new element in the repo
 $ hg update    # to retrieve changes from the repo
 $ hg commit    # to commit changes to the repo
 \end{verbatim}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Chunks}
