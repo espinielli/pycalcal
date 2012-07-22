@@ -6,19 +6,19 @@
 *   to try it [online][PyCalCalOnline] (_experimental !!_)
 
 *PyCalCal* is an implementation in Python of _CALENDRICA 3.0_, which is the
- Common Lisp implementation of the functions described in
+ Common Lisp implementation of the functions described in the [book][CalCalBook]
 
-Nachum Dershowitz, Edward M. Reingold "[Calendrical Calculations][CalCalBook]
-Cambridge University Press; 3rd edition (December 10, 2007);
-Paperback; ISBN-13: 9780521702386
-E. M. Reingold and N. Dershowitz "",
-3rd ed., Cambridge University Press, 2008.
+    Nachum Dershowitz, Edward M. Reingold "Calendrical Calculations"
+    Cambridge University Press; 3rd edition (December 10, 2007)
+    Paperback; ISBN-13: 9780521702386
+    E. M. Reingold and N. Dershowitz,
+    3rd ed., Cambridge University Press, 2008.
 
-Some of the algorithms are from
+Some of the algorithms are from:
 
-Jean Meeus "Astronomical Algorithms"
-Willmann-Bell, Inc.; 2nd edition (1998 with corrections as of June 15, 2005);
-ISBN: 0-943396-61-1
+    Jean Meeus "Astronomical Algorithms"
+    Willmann-Bell, Inc.; 2nd edition (1998 with corrections as of June 15, 2005);
+    ISBN: 0-943396-61-1
 
 
 ### STATUS ###
@@ -53,16 +53,8 @@ Files '_dates[1-5].tex_', containing test data, have been kindly provided to me
 by Prof. Reingold.
 
 
-[CalCalBook]:
-http://www.cup.cam.ac.uk/catalogue/catalogue.asp?isbn=9780521702386 "Calendrical
-Calculations" 
-[BookResPage]:
-http://www.cup.cam.ac.uk/catalogue/catalogue.asp?isbn=9780521702386&ss=res
-"Calendrical Calculations's resurce page at Cambridge University Press"
-[C3Zip]:
-http://www.cup.cam.ac.uk/resources/0521702380/5106_calendrica-3.0.cl.zip
-"Zip file of Calendrica 3.0 source at Cambridge University Press"
+[CalCalBook]: http://www.cup.cam.ac.uk/catalogue/catalogue.asp?isbn=9780521702386 "Calendrical Calculations"
+[BookResPage]: http://www.cup.cam.ac.uk/catalogue/catalogue.asp?isbn=9780521702386&ss=res "Calendrical Calculations's resurce page at Cambridge University Press"
+[C3Zip]: http://www.cup.cam.ac.uk/resources/0521702380/5106_calendrica-3.0.cl.zip "Zip file of Calendrica 3.0 source at Cambridge University Press"
 [PyCalCalOnline]: http://calendrica.appspot.com "PyCalCal online appl"
-[BookCompanionSite]:
-http://emr.cs.iit.edu/home/reingold/calendar-book/third-edition/index.html
-"Calendrical Calculations' book companion site"
+[BookCompanionSite]: http://emr.cs.iit.edu/home/reingold/calendar-book/third-edition/index.html "Calendrical Calculations' book companion site"
