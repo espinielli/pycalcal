@@ -1,0 +1,12 @@
+digraph finite_state_machine {
+        ranksep=3;
+        ratio=auto;
+	node [shape = doublecircle]; equatorial;
+	node [shape = circle, fixedsize = true, width = 1.5];
+	equatorial  -> galactic [ labeldistance=3, headlabel = "1" ];
+	galactic  -> equatorial [ labeldistance=3, headlabel = "2" ];
+	equatorial  -> ecliptical [ labeldistance=3, headlabel = "3" ];
+	ecliptical  -> equatorial [ labeldistance=3, headlabel = "4" ];
+	equatorial  -> horizontal [ labeldistance=3, headlabel = "5" ];
+	horizontal  -> equatorial [ labeldistance=3, headlabel = "6" ];
+}
