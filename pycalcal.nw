@@ -8892,7 +8892,7 @@ clean:
 
 # ask to remove all files not recognized by hg
 xclean: clean
-	for f in $$(hg status | grep -e '^?' | sed -e 's/^? //g'); \
+	for f in $$(git status -s | grep -e '^??' | sed -e 's/^?? //g'); \
    do \
       rm -i $$f; \
    done
