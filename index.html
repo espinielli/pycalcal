@@ -1,0 +1,199 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Pycalcal by espinielli</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Pycalcal</h1>
+        <p>Calendrical Calculations in Python</p>
+
+        <p class="view"><a href="https://github.com/espinielli/pycalcal">View the Project on GitHub <small>espinielli/pycalcal</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/espinielli/pycalcal/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/espinielli/pycalcal/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/espinielli/pycalcal">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p><em>PyCalCal</em> is a Python library that makes it easy to:</p>
+
+<ul>
+<li>  convert dates from/to <strong>31</strong> different calendars</li>
+<li>  calculate special dates/times such as holidays, astronomical events (equinoxes,
+solstices ...), sunrise/sunset</li>
+</ul><p>You can also try it out <a href="http://calendrica.appspot.com" title="PyCalCal online appl">online</a> (<em>experimental !!</em>)</p>
+
+<h1>How to run PyCalCal</h1>
+
+<p>In order to use the pycalcal you need:</p>
+
+<ul>
+<li>a Python version equal to or greater than 2.5 and less than 3.0.</li>
+<li><a href="http://code.google.com/p/mpmath/">mpmath</a></li>
+</ul><p>Then it is enough to place <code>pycalcal.py</code> file in any place where python can load it, i.e. your current working directory.</p>
+
+<h2>Getting started</h2>
+
+<p>The first thing to do is to load pycalcal. From your python prompt type (omit &gt;&gt;&gt; of course...)</p>
+
+<div class="highlight">
+<pre>   <span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">pycalcal</span> <span class="kn">as</span> <span class="nn">pcc</span>
+</pre>
+</div>
+
+
+<p>You are now ready to play with calendars, i.e. converting dates from gregorian to coptic:</p>
+
+<div class="highlight">
+<pre><span class="o">&gt;&gt;&gt;</span> <span class="n">fix</span> <span class="o">=</span> <span class="n">pcc</span><span class="o">.</span><span class="n">fixed_from_gregorian</span><span class="p">(</span><span class="n">pcc</span><span class="o">.</span><span class="n">gregorian_date</span><span class="p">(</span><span class="mi">2006</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">pcc</span><span class="o">.</span><span class="n">coptic_from_fixed</span><span class="p">(</span><span class="n">fix</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">1722</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">28</span><span class="p">]</span>
+</pre>
+</div>
+
+
+<p>or finding out when next year's Easter will be</p>
+
+<div class="highlight">
+<pre><span class="o">&gt;&gt;&gt;</span> <span class="n">pcc</span><span class="o">.</span><span class="n">gregorian_from_fixed</span><span class="p">(</span><span class="n">pcc</span><span class="o">.</span><span class="n">easter</span><span class="p">(</span><span class="mi">2010</span><span class="p">))</span>
+<span class="p">[</span><span class="mi">20010</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+</pre>
+</div>
+
+
+<p>or Hindu's New Year for 2009:</p>
+
+<div class="highlight">
+<pre><span class="o">&gt;&gt;&gt;</span> <span class="n">pcc</span><span class="o">.</span><span class="n">gregorian_from_fixed</span><span class="p">(</span><span class="n">pcc</span><span class="o">.</span><span class="n">diwali</span><span class="p">(</span><span class="mi">2009</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+<span class="p">[</span><span class="mi">2009</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">19</span><span class="p">]</span>
+</pre>
+</div>
+
+
+<p>Enjoy!!!</p>
+
+<h1>How to build PyCalCal</h1>
+
+<p>PyCalCal is generated following the literate programming paradigm.
+In order generate source code and documentation you need the following tools:</p>
+
+<ul>
+<li>
+<a href="http://www.cs.tufts.edu/%7Enr/noweb/">noweb</a>
+ Installing noweb has never been a problem on all platforms/operating
+ systems I tried: MS Windows XP (with cygwin), HP-UX, Mac OS X Snow
+ Leopard. </li>
+<li>make</li>
+<li>sh (unix shell)</li>
+<li>LaTeX distribution, i.e. TeXLive2010 (with asymptote!)</li>
+</ul><p>Unit tests' line coverage metrics are gathered by <a href="http://nedbatchelder.com/code/coverage/">coverage</a></p>
+
+<p>Here are the steps for buiding:</p>
+
+<ol>
+<li>
+<p>execute <em>makemake.sh</em> in order to create the Makefile</p>
+
+<blockquote>
+<p>$ ./makemake.sh</p>
+</blockquote>
+</li>
+<li>
+<p>generate the code:</p>
+
+<blockquote>
+<p>$ make pycalca.py</p>
+</blockquote>
+</li>
+<li>
+<p>generate the doc:</p>
+
+<blockquote>
+<p>$ make figures
+  $ make pycalcal.pdf</p>
+</blockquote>
+</li>
+<li>
+<p>run the tests:</p>
+
+<blockquote>
+<p>$ make test</p>
+</blockquote>
+</li>
+</ol><h3>Details</h3>
+
+<p><em>PyCalCal</em> is an implementation in Python of <em>CALENDRICA 3.0</em>, which is the
+ Common Lisp implementation of the functions described in the <a href="http://www.cup.cam.ac.uk/catalogue/catalogue.asp?isbn=9780521702386" title="Calendrical Calculations">book</a></p>
+
+<pre><code>Nachum Dershowitz, Edward M. Reingold "Calendrical Calculations"
+Cambridge University Press; 3rd edition (December 10, 2007)
+Paperback; ISBN-13: 9780521702386
+E. M. Reingold and N. Dershowitz,
+3rd ed., Cambridge University Press, 2008.
+</code></pre>
+
+<p>Some of the algorithms are from:</p>
+
+<pre><code>Jean Meeus "Astronomical Algorithms"
+Willmann-Bell, Inc.
+2nd edition (1998 with corrections as of June 15, 2005);
+ISBN: 0-943396-61-1
+</code></pre>
+
+<h3>STATUS</h3>
+
+<p>I, Enrico Spinielli, implemented PyCalCal for fun and to further assaporate the beauty of the
+work of the authors of the book.
+Having said so, PyCalCal code is pretty well tested and usable.</p>
+
+<p>See '<em>STATUS</em>' file for further details.</p>
+
+<h3>Acknowledgements</h3>
+
+<p>I want to thank:</p>
+
+<ul>
+<li>Prof.s Reingold and Dershowitz for their prompt replies to my (sometimes
+silly, other times pertinent) questions</li>
+<li>my family, Gilda and the kids, for the good they bring to my life (and the
+time they let me spend with all this)</li>
+<li>my parents and parents-in-law for their past and continuous support</li>
+</ul><h3>Notes</h3>
+
+<p><em>CALENDRICAL 3.0</em> is written and copyrighted by E. M. Reingold and
+N. Dershowitz as described in file 'COPYRIGHT_DERSHOWITZ_REINGOLD'</p>
+
+<h3>Resources</h3>
+
+<p>Prof. Reingold mantains a <a href="http://emr.cs.iit.edu/home/reingold/calendar-book/third-edition/index.html" title="Calendrical Calculations' book companion site">companion site for the book</a>.</p>
+
+<p>The <a href="http://www.cup.cam.ac.uk/catalogue/catalogue.asp?isbn=9780521702386&amp;ss=res" title="Calendrical Calculations's resurce page at Cambridge University Press">resource page of the book</a> at Cambridge University Press
+provides a link to a zipped version of 'calendrica-3.0.cl' which I included
+unzipped in PyCalCal project repo in order to be able to reference the relevant
+snippets of the original implementation.</p>
+
+<p>Files '<em>dates[1-5].tex</em>', containing test data, have been kindly provided to me
+by Prof. Reingold.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/espinielli">espinielli</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
