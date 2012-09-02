@@ -331,7 +331,7 @@ algorithms!
 # see lines 6-80 in calendrica-3.0.cl
 
 <<testa>>=
-"""Python implementation of Dershowitz and Reingold's 'Calendrica Calculations'.
+"""Python implementation of Dershowitz and Reingold 'Calendrica Calculations'.
 
 Python implementation of calendrical algorithms as described in Common
 Lisp in calendrical-3.0.cl (and errata as made available by the authors.)
@@ -345,9 +345,7 @@ Author: Enrico Spinielli
 """
 
 <<LICENSE>>
-
 # <<generated code warning>>
-
 
 @ The following is where I control the project version number
 in a centralised way. The version is number is composed of 3
@@ -410,6 +408,7 @@ they will return a predefined value, \texttt{BOGUS}, to mark this case.
 # see lines 244-247 in calendrica-3.0.cl
 `BOGUS = 'bogus'
 
+
 @
 Some \cl\ functions are available under other names and/or in
 additional packages in \py\ or with a different semantic,
@@ -434,6 +433,7 @@ def `quotient(m, n):
     """Return the whole part of m/n towards negative infinity."""
     return ifloor(m / n)
 
+
 @ For \texttt{floor} and \texttt{round} I decided to make it
 explicit the fact that they return an integer and named
 them with a prefixed \textit{i} (for integer):
@@ -445,6 +445,7 @@ def `ifloor(n):
     """Return the whole part of m/n."""
     from math import floor
     return int(floor(n))
+
 
 # I (re)define round: in CL it always returns an integer.
 # I make it explicit the fact it returns an integer by
@@ -463,10 +464,12 @@ def `iround(n):
 # returns the time of the day
 from operator import `mod
 
+
 # see lines 254-257 in calendrica-3.0.cl
 def `amod(x, y):
     """Return the same as a % b with b instead of 0."""
     return y + (mod(x, -y))
+
 
 @ The following  definitions are a translation in \py\ of \cl\
 macros\index{Macro}. Macro definition is a very powerful tool but
@@ -481,7 +484,8 @@ the correct result.
 def `next(i, p):
     """Return first integer greater or equal to initial index, i,
     such that condition, p, holds."""
-    return i if p(i) else next(i+1, p)
+    return i if p(i) else next(i + 1, p)
+
 
 <<basic code tests>>=
 <<test next>>
@@ -497,7 +501,8 @@ def testNext(self):
 def `final(i, p):
     """Return last integer greater or equal to initial index, i,
     such that condition, p, holds."""
-    return i - 1 if not p(i) else final(i+1, p)
+    return i - 1 if not p(i) else final(i + 1, p)
+
 
 <<basic code tests>>=
 <<test final>>
@@ -516,7 +521,8 @@ in order to evaluate polynomial approximations of equations of motion.
 def `summa(f, k, p):
     """Return the sum of f(i) from i=k, k+1, ... till p(i) holds true or 0.
     This is a tail recursive implementation."""
-    return 0 if not p(k) else f(k) + summa(f, k+1, p)
+    return 0 if not p(k) else f(k) + summa(f, k + 1, p)
+
 
 def `altsumma(f, k, p):
     """Return the sum of f(i) from i=k, k+1, ... till p(i) holds true or 0.
@@ -536,8 +542,8 @@ def `altsumma(f, k, p):
             C = (T - S) - Y
             S = T
             j += 1
-    
     return S
+
 
 <<basic code tests>>=
 <<test summa>>
@@ -562,13 +568,14 @@ interval given a precision criteria to satify.
 def `binary_search(lo, hi, p, e):
     """Bisection search for x in [lo, hi] such that condition 'e' holds.
     p determines when to go left."""
-    x = (lo + hi) / 2 
+    x = (lo + hi) / 2
     if p(lo, hi):
         return x
     elif e(x):
         return binary_search(lo, x, p, e)
     else:
         return binary_search(x, hi, p, e)
+
 
 <<basic code tests>>=
 <<test binary search>>
@@ -592,7 +599,7 @@ def `testBinarySearch(self):
 
 <<basic code>>=
 # see lines 295-302 in calendrica-3.0.cl
-def `invert_angular(f, y, a, b, prec=10**-5):
+def `invert_angular(f, y, a, b, prec=10 ** -5):
     """Find inverse of angular function 'f' at 'y' within interval [a,b].
     Default precision is 0.00001"""
     return binary_search(a, b,
@@ -601,6 +608,7 @@ def `invert_angular(f, y, a, b, prec=10**-5):
 #def `invert_angular(f, y, a, b):
 #      from scipy.optimize import brentq
 #    return(brentq((lambda x: mod(f(x) - y), 360)), a, b, xtol=error)
+
 
 <<basic code tests>>=
 <<test invert angular>>
@@ -649,6 +657,7 @@ def `sigma(l, b):
     # 780
     return sum(b(*e) for e in zip(*l))
 
+
 <<basic code tests>>=
 <<test sigma>>
 
@@ -677,6 +686,7 @@ def `poly(x, a):
     	p = p * x + a[n-i]
     return p
 
+
 <<basic code tests>>=
 <<test poly>>
 
@@ -698,9 +708,11 @@ def `epoch():
     would do.)"""
     return 0
 
+
 def `rd(tee):
     """Return rata diem (number of days since epoch) of moment in time, tee."""
     return tee - epoch()
+
 
 @ And here are some other basilar (and arbitrary) definitions: days of the
 week, date and time data structures.
@@ -708,7 +720,6 @@ week, date and time data structures.
 The days of the week constants are defined
 as constants from $1$ to $7$, where Sunday is (arbitrarily) assigned $0$.
 <<basic code>>=
-#$
 # see lines 331-334 in calendrica-3.0.cl
 `SUNDAY = 0
 
@@ -1335,9 +1346,10 @@ def `ce(n):
 
 # see lines 1057-1060 in calendrica-3.0.cl
 def `is_julian_leap_year(j_year):
-   """Return True if Julian year 'j_year' is a leap year in
-   the Julian calendar."""
-   return mod(j_year, 4) == (0 if j_year > 0 else 3)
+    """Return True if Julian year 'j_year' is a leap year in
+    the Julian calendar."""
+    return mod(j_year, 4) == (0 if j_year > 0 else 3)
+
 
 # see lines 1062-1082 in calendrica-3.0.cl
 def `fixed_from_julian(j_date):
@@ -1476,18 +1488,26 @@ def `roman_from_fixed(date):
     day    = standard_day(j_date)
     year   = standard_year(j_date)
     month_prime = amod(1 + month, 12)
-    year_prime  = (year if month_prime <> 1 
-                   else (year + 1 if (year <> -1) else 1))
+    year_prime  = (year if month_prime != 1 
+                   else (year + 1 if (year != -1) else 1))
     kalends1 = fixed_from_roman(
-        roman_date(year_prime, month_prime,KALENDS, 1, False))
+        roman_date(year_prime, month_prime, KALENDS, 1, False))
 
     if day == 1:
         res = roman_date(year, month, KALENDS, 1, False)
     elif day <= nones_of_month(month):
-        res = roman_date(year, month, NONES, nones_of_month(month)-day+1, False)
+        res = roman_date(year,
+                         month,
+                         NONES, 
+                         nones_of_month(month) - day + 1,
+                         False)
     elif day <= ides_of_month(month):
-        res = roman_date(year, month, IDES, ides_of_month(month)-day+1, False)
-    elif (month <> FEBRUARY) or not is_julian_leap_year(year):
+        res = roman_date(year,
+                         month,
+                         IDES,
+                         ides_of_month(month) - day + 1,
+                         False)
+    elif (month != FEBRUARY) or not is_julian_leap_year(year):
         res = roman_date(year_prime,
                          month_prime,
                          KALENDS,
@@ -5722,7 +5742,7 @@ def `dragon_festival(g_year):
     elapsed_years = 1 + g_year - gregorian_year_from_fixed(CHINESE_EPOCH)
     cycle = 1 + quotient(elapsed_years - 1, 60)
     year = amod(elapsed_years, 60)
-    return fixed_from_chinese(chinese_date(cycle, year, 5, false, 5))
+    return fixed_from_chinese(chinese_date(cycle, year, 5, False, 5))
 
 
 # see lines 4701-4708 in calendrica-3.0.cl
