@@ -4362,6 +4362,33 @@ def `solar_longitude(tee):
                  lambda x, y, z:  x * sin_degrees(y + (z * c))))
     return mod(lam + aberration(tee) + nutation(tee), 360)
 
+
+def `geometric_solar_mean_longitude(tee):
+    """Return the geometric mean longitude of the Sun at moment, tee,
+    referred to mean equinox of the date."""
+    c = julian_centuries(tee)
+    return poly(c, deg([mpf(280.46646), mpf(36000.76983), mpf(0.0003032)]))
+
+def `solar_latitude(tee):
+    """Return the latitude of Sun (in degrees) at moment, tee.
+    Adapted from "Astronomical Algorithms" by Jean Meeus,
+    Willmann_Bell, Inc., 1998."""
+    pass
+
+def `solar_distance(tee):
+    """Return the distance of Sun (in degrees) at moment, tee.
+    Adapted from "Astronomical Algorithms" by Jean Meeus,
+    Willmann_Bell, Inc., 1998."""
+    pass
+
+def `solar_position(tee):
+    """Return the position of the Sun (geocentric latitude and longitude [in degrees]
+    and distance [in meters]) at moment, tee.
+    Adapted from "Astronomical Algorithms" by Jean Meeus,
+    Willmann_Bell, Inc., 2nd ed."""
+    return (solar_latitude(tee), solar_longitude(tee), solar_distance(tee))
+
+
 # see lines 3261-3271 in calendrica-3.0.cl
 def `nutation(tee):
     """Return the longitudinal nutation at moment, tee."""
