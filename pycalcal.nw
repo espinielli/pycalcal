@@ -162,10 +162,10 @@ bindingoffset=5mm]{geometry}
 \setcounter{page}{1}
 \pdfbookmark[1]{Contents}{toc}  %%% additional bookmark for ToC
 \thispagestyle{plain}           %%% uses the above defined fancy
-                                %%% page-header 
+                                %%% page-header
 \tableofcontents
 \markboth{Table of Contents}{Table of Contents} %%% for the page
-                                                %%% header 
+                                                %%% header
 \cleardoublepage                %%% start again on odd page
 \pagenumbering{arabic}          %%% from now on Arabic page numbers
 \setcounter{page}{1}
@@ -199,7 +199,7 @@ a single source file and prefixed with the following warning:
 <<generated code warning>>=
 AUTOMATICALLY GENERATED FROM pycalcal.nw: ANY CHANGES WILL BE OVERWRITTEN.
 
-@ 
+@
 
 \section{Structure}
 \label{sec:structure}
@@ -275,7 +275,7 @@ import unittest
 if __name__ == "__main__":
     unittest.main()
 
-@ 
+@
 Given I also want to be able to run a single unit tests part in isolation, i.e.
 when working on Persian calendar I just want to run the Persian
 calendar's tests, I generate a unit tests file per each part.
@@ -357,7 +357,7 @@ integers separated by a dot, '.' which stand for
 version $0.9$.
 <<project version>>=
 1.0.0
-@ 
+@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{The Calendars}
@@ -513,7 +513,7 @@ def `testFinal(self):
     self.assertEqual(final(0, lambda i: i < 3), 2)
     self.assertEqual(final(0, lambda i: i < 0), -1)
 
-@ 
+@
 The following functions are used mainly in the astronomical algorithms
 in order to evaluate polynomial approximations of equations of motion.
 <<basic code>>=
@@ -560,7 +560,7 @@ def `testAltSumma(self):
     self.assertEqual(altsumma(lambda x: 1.0, 0, lambda i: i>=4), 0)
     self.assertEqual(altsumma(lambda x: x**2, 1, lambda i: i<=4), 30)
 
-@ 
+@
 \texttt{binary\_search} is looking for a value of a function within an
 interval given a precision criteria to satify.
 <<basic code>>=
@@ -623,7 +623,7 @@ def `testInvertAngular(self):
                                 0,
                                 radians(60.0)) - radians(45.0) <= 10**-5)
 
-@ 
+@
 \texttt{sigma} is used expecially for astronomical formulas in order
 to go thru tables of value, see~\ref{sec:astro}.
 This implementation is really horrible...but I will not touch it untill I will
@@ -822,12 +822,12 @@ def `testClockFromMoment(self):
     self.assertEqual(hour(c), 12)
     self.assertEqual(minute(c), 0)
     self.assertAlmostEqual(seconds(c), 0, 2)
-    
+
     c = clock_from_moment(3.75)
     self.assertEqual(hour(c), 18)
     self.assertEqual(minute(c), 0)
     self.assertAlmostEqual(seconds(c), 0, 2)
-    
+
     c = clock_from_moment(3.8)
     self.assertEqual(hour(c), 19)
     self.assertEqual(minute(c), 11)
@@ -870,7 +870,7 @@ def `angle_from_degrees(alpha):
     s = mod(alpha * 60 * 60, 60)
     return degrees_minutes_seconds(d, m, s)
 
-@ 
+@
 These helper functions are used to deal with intervals and ranges of events:
 <<basic code>>=
 # see lines 502-510 in calendrica-3.0.cl
@@ -899,7 +899,7 @@ def `is_in_range(tee, range):
     False otherwise."""
     return start(range) <= tee <= end(range)
 
-@ 
+@
 Julian days are of basic importance expecially in Astronomy.
 <<basic code>>=
 # see lines 442-445 in calendrica-3.0.cl
@@ -942,7 +942,7 @@ def `mjd_from_fixed(date):
 
 \subsection{Unit tests}
 The relevant tests are available to be run in isolation in
-\texttt{basicCodeUnitTest.py} 
+\texttt{basicCodeUnitTest.py}
 <<basicCodeUnitTest.py>>=
 # <<generated code warning>>
 <<import for testing>>
@@ -977,7 +977,7 @@ def `gregorian_date(year, month, day):
     """Return a Gregorian date data structure."""
     return [year, month, day]
 
-# see lines 591-595 in calendrica-3.0.cl 
+# see lines 591-595 in calendrica-3.0.cl
 `GREGORIAN_EPOCH = rd(1)
 
 <<gregorian months>>=
@@ -1030,12 +1030,12 @@ def `fixed_from_gregorian(g_date):
     month = standard_month(g_date)
     day   = standard_day(g_date)
     year  = standard_year(g_date)
-    return ((GREGORIAN_EPOCH - 1) + 
-            (365 * (year -1)) + 
-            quotient(year - 1, 4) - 
-            quotient(year - 1, 100) + 
-            quotient(year - 1, 400) + 
-            quotient((367 * month) - 362, 12) + 
+    return ((GREGORIAN_EPOCH - 1) +
+            (365 * (year -1)) +
+            quotient(year - 1, 4) -
+            quotient(year - 1, 100) +
+            quotient(year - 1, 400) +
+            quotient((367 * month) - 362, 12) +
             (0 if month <= 2
              else (-1 if is_gregorian_leap_year(year) else -2)) +
             day)
@@ -1306,9 +1306,9 @@ class `GregorianCalendarSmokeTestCase(unittest.TestCase):
         self.assertEqual(day_number(self.myDate), 30)
         self.assertEqual(day_number(self.aLeapDate), 60)
 
-@ 
+@
 \subsection{Unit tests}
-As usual the unit tests are as follows 
+As usual the unit tests are as follows
 <<gregorianCalendarUnitTest.py>>=
 # <<generated code warning>>
 <<import for testing>>
@@ -1402,7 +1402,7 @@ class `JulianSmokeTestCase(unittest.TestCase):
         self.assertTrue(is_julian_leap_year(2000))
         self.assertTrue(is_julian_leap_year(1900))
 
-@ 
+@
 And here is the Roman representation of the Julian calendar:
 
 <<julian calendar>>=
@@ -1488,7 +1488,7 @@ def `roman_from_fixed(date):
     day    = standard_day(j_date)
     year   = standard_year(j_date)
     month_prime = amod(1 + month, 12)
-    year_prime  = (year if month_prime != 1 
+    year_prime  = (year if month_prime != 1
                    else (year + 1 if (year != -1) else 1))
     kalends1 = fixed_from_roman(
         roman_date(year_prime, month_prime, KALENDS, 1, False))
@@ -1498,7 +1498,7 @@ def `roman_from_fixed(date):
     elif day <= nones_of_month(month):
         res = roman_date(year,
                          month,
-                         NONES, 
+                         NONES,
                          nones_of_month(month) - day + 1,
                          False)
     elif day <= ides_of_month(month):
@@ -1525,7 +1525,7 @@ def `roman_from_fixed(date):
 # see lines 1236-1241 in calendrica-3.0.cl
 def `julian_year_from_auc_year(year):
     """Return the Julian year equivalent to AUC year 'year'."""
-    return ((year + YEAR_ROME_FOUNDED - 1) 
+    return ((year + YEAR_ROME_FOUNDED - 1)
             if (1 <= year <= (year - YEAR_ROME_FOUNDED))
             else (year + YEAR_ROME_FOUNDED))
 
@@ -1568,7 +1568,7 @@ def `julian_in_gregorian(j_month, j_day, g_year):
     date1 = fixed_from_julian(julian_date(y, j_month, j_day))
     date2 = fixed_from_julian(julian_date(y_prime, j_month, j_day))
     return list_range([date1, date2], gregorian_year_range(g_year))
-    
+
 
 # see lines 1268-1272 in calendrica-3.0.cl
 def `eastern_orthodox_christmas(g_year):
@@ -1576,7 +1576,7 @@ def `eastern_orthodox_christmas(g_year):
     in Gregorian year 'g_year'."""
     return julian_in_gregorian(DECEMBER, 25, g_year)
 
-@ 
+@
 \subsection{Unit tests}
 <<julianCalendarUnitTest.py>>=
 # <<generated code warning>>
@@ -1585,7 +1585,7 @@ from appendixCUnitTest import AppendixCTable1TestCaseBase
 <<julian calendar unit test>>
 <<execute tests>>
 
-@ 
+@
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Egyptian/Armenian Calendars}\label{sec:egypt}
@@ -1642,7 +1642,7 @@ def `armenian_from_fixed(date):
     """Return the Armenian date corresponding to fixed date 'date'."""
     return egyptian_from_fixed(date + (EGYPTIAN_EPOCH - ARMENIAN_EPOCH))
 
-@ 
+@
 and now the tests \ldots
 
 <<egyptian and armenian calendars unit test>>=
@@ -1765,7 +1765,7 @@ from appendixCUnitTest import AppendixCTable1TestCaseBase
 <<execute tests>>
 
 
-@ 
+@
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Coptic and Ethiopic Calendars}
@@ -1885,7 +1885,7 @@ from appendixCUnitTest import AppendixCTable2TestCaseBase
 <<coptic and ethiopic calendars unit test>>
 <<execute tests>>
 
-@ 
+@
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Ecclesiastical Calendars}
@@ -1950,7 +1950,7 @@ from appendixCUnitTest import AppendixCTable3TestCaseBase
 <<ecclesiastical calendars unit test>>
 <<execute tests>>
 
-@ 
+@
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Islamic Calendar}
@@ -2313,7 +2313,7 @@ def `yom_ha_zikkaron(g_year):
     year g_year."""
     hebrew_year = g_year - gregorian_year_from_fixed(HEBREW_EPOCH)
     iyyar4 = fixed_from_hebrew(hebrew_date(hebrew_year, IYYAR, 4))
-    
+
     if (day_of_week_from_fixed(iyyar4) in [THURSDAY, FRIDAY]):
         return kday_before(WEDNESDAY, iyyar4)
     elif (SUNDAY == day_of_week_from_fixed(iyyar4)):
@@ -2591,7 +2591,7 @@ def `mayan_tzolkin_ordinal(t_date):
     return mod(number - 1 + (39 * (number - name)), 260)
 
 # see lines 2116-2120 in calendrica-3.0.cl
-`MAYAN_TZOLKIN_EPOCH = (MAYAN_EPOCH - 
+`MAYAN_TZOLKIN_EPOCH = (MAYAN_EPOCH -
                         mayan_tzolkin_ordinal(mayan_tzolkin_date(4, 20)))
 
 # see lines 2122-2128 in calendrica-3.0.cl
@@ -2952,13 +2952,13 @@ def `fixed_from_old_hindu_lunar(l_date):
     mina  = ((12 * year) - 1) * ARYA_SOLAR_MONTH
     lunar_new_year = ARYA_LUNAR_MONTH * (quotient(mina, ARYA_LUNAR_MONTH) + 1)
 
-    if ((not leap) and 
+    if ((not leap) and
         (ceiling((lunar_new_year - mina) / (ARYA_SOLAR_MONTH - ARYA_LUNAR_MONTH))
          <= month)):
         temp = month
     else:
         temp = month - 1
-    temp = (HINDU_EPOCH    + 
+    temp = (HINDU_EPOCH    +
             lunar_new_year +
             (ARYA_LUNAR_MONTH * temp) +
             ((day - 1) * ARYA_LUNAR_DAY) +
@@ -3237,7 +3237,7 @@ speak of \emph{mean}, \emph{apparent} and \emph{true} position.
   object (a star or other celestial object outside the solar system) as it would
   hypothetically be observed from the solar system barycenter
   at the specified date, with respect to a fixed coordinate system if the masses
-  of the Sun and other solar system bodies were negligible. 
+  of the Sun and other solar system bodies were negligible.
   It is the apparent position on the celestial sphere as it would be seen from
   the barycenter of the solar system and referred to the ecliptic and mean
   equinox of the date (or to the mean equator and mean equinox of the date.)
@@ -3309,7 +3309,7 @@ in this case, we use the point where it crosses the southern half of
 the equator.
 
 The Hour Angle ($HA$ or $H$) of object X is the angular distance between the
-meridian of X and the celestial meridian.  
+meridian of X and the celestial meridian.
 It is measured westwards in hours, 0h-24h, since the Earth rotates 360° in 24 hours.
 
 
@@ -3364,7 +3364,7 @@ algorithmically.
 Ecliptical from equatorial:
 \begin{eqnarray}
   \label{eq:equ2ecl}
-  \tan \lambda &=& \frac{\sin \alpha\  \cos \varepsilon + 
+  \tan \lambda &=& \frac{\sin \alpha\  \cos \varepsilon +
     \tan \delta\  \sin \varepsilon}{\cos \alpha} \\
   \sin \beta &=& \sin \delta\  \cos \varepsilon - \cos \delta\  \sin \varepsilon\  \sin \alpha
 \end{eqnarray}
@@ -3457,9 +3457,9 @@ def `horizontal_from_equatorial(H, declination, latitude):
     sl = sin_degrees(latitude)
     cl = cos_degrees(latitude)
     A = normalized_degrees_from_radians(
-            atan2(sin_degrees(H), 
+            atan2(sin_degrees(H),
                   ch * sl - tan_degrees(declination) * cl))
-    h = arcsin_degrees(sl * sin_degrees(declination) + 
+    h = arcsin_degrees(sl * sin_degrees(declination) +
                        cl * cos_degrees(declination) * ch)
     return [A, h]
 
@@ -3481,10 +3481,10 @@ def `equatorial_from_horizontal(A, h, phi):
     NOTE: 'azimuth' is measured westward from the South.
     """
     H = normalized_degrees_from_radians(
-            atan2(sin_degrees(A), 
-                  (cos_degrees(A) * sin_degrees(phi) + 
+            atan2(sin_degrees(A),
+                  (cos_degrees(A) * sin_degrees(phi) +
                    tan_degrees(h) * cos_degrees(phi))))
-    delta = arcsin_degrees(sin_degrees(phi) * sin_degrees(h) - 
+    delta = arcsin_degrees(sin_degrees(phi) * sin_degrees(h) -
                            cos_degrees(phi) * cos_degrees(h) * cos_degrees(A))
     return [H, delta]
 
@@ -3743,7 +3743,7 @@ def `julian_centuries(tee):
     """Return Julian centuries since 2000 at moment tee."""
     return (dynamical_from_universal(tee) - J2000) / mpf(36525)
 
-@ 
+@
 \subsubsection{Mean Obliquity}
 \label{sec:meanobliquity}
 The \emph{mean} obliquity is defined by the following formula~\cite[equ.~22.2]{meeus:astroalgo}:
@@ -3829,7 +3829,7 @@ def `right_ascension(tee, beta, lam):
 
 # see lines 2905-2920 in calendrica-3.0.cl
 def `sine_offset(tee, location, alpha):
-    """Return sine of angle between position of sun at 
+    """Return sine of angle between position of sun at
     local time tee and when its depression is alpha at location, location.
     Out of range when it does not occur."""
     phi = latitude(location)
@@ -3972,7 +3972,7 @@ def `urbana_winter(g_year):
     """Return standard time of the winter solstice in Urbana, Illinois, USA."""
     return standard_from_universal(
                solar_longitude_after(
-                   WINTER, 
+                   WINTER,
                    fixed_from_gregorian(gregorian_date(g_year, JANUARY, 1))),
                URBANA)
 
@@ -4083,7 +4083,7 @@ def `jewish_dusk(date, location):
 def `jewish_sabbath_ends(date, location):
     """Return standard time of end of Jewish sabbath on fixed date, date,
     at location, location, (as per Berthold Cohn)."""
-    return dusk(date, location, angle(7, 5, 0)) 
+    return dusk(date, location, angle(7, 5, 0))
 
 # see lines 3033-3042 in calendrica-3.0.cl
 def `daytime_temporal_hour(date, location):
@@ -4168,7 +4168,7 @@ def `testUniversalFromDynamical(self):
     # from Meeus Example 10.a, pag 78
     date = gregorian_date(1977, FEBRUARY, 18)
     time = time_from_clock([3, 37, 40])
-    td   = fixed_from_gregorian(date) + time 
+    td   = fixed_from_gregorian(date) + time
     utc  = universal_from_dynamical(td)
     clk  = clock_from_moment(utc)
     self.assertEqual(hour(clk), 3)
@@ -4179,7 +4179,7 @@ def `testDynamicalFromUniversal(self):
     # from Meeus Example 10.a, pag 78 (well, inverse of)
     date = gregorian_date(1977, FEBRUARY, 18)
     time = time_from_clock([3, 36, 52])
-    utc  = fixed_from_gregorian(date) + time 
+    utc  = fixed_from_gregorian(date) + time
     td   = dynamical_from_universal(utc)
     clk  = clock_from_moment(td)
     self.assertEqual(hour(clk), 3)
@@ -4228,7 +4228,7 @@ def `testDynamicalFromUniversal(self):
     # I then follow Calendrica Calculations (and NASA)
     date = gregorian_date(333, FEBRUARY, 6)
     time = time_from_clock([6, 0, 0])
-    utc  = fixed_from_gregorian(date) + time 
+    utc  = fixed_from_gregorian(date) + time
     td   = dynamical_from_universal(utc)
     clk  = clock_from_moment(td)
     self.assertEqual(hour(clk), 7)
@@ -4395,7 +4395,7 @@ def `nutation(tee):
     c = julian_centuries(tee)
     cap_A = poly(c, deg([mpf(124.90), mpf(-1934.134), mpf(0.002063)]))
     cap_B = poly(c, deg([mpf(201.11), mpf(72001.5377), mpf(0.00057)]))
-    return (deg(mpf(-0.004778))  * sin_degrees(cap_A) + 
+    return (deg(mpf(-0.004778))  * sin_degrees(cap_A) +
             deg(mpf(-0.0003667)) * sin_degrees(cap_B))
 
 <<astronomical lunar tests>>=
@@ -4447,8 +4447,8 @@ def `precession(tee):
                        secs(mpf(-0.03302)),
                        secs(mpf(0.000060))]),
               360)
-    cap_P = mod(poly(c, [deg(mpf(174.876384)), 
-                         secs(mpf(-869.8089)), 
+    cap_P = mod(poly(c, [deg(mpf(174.876384)),
+                         secs(mpf(-869.8089)),
                          secs(mpf(0.03536))]),
                 360)
     p = mod(poly(c, [0,
@@ -4656,7 +4656,7 @@ def `lunar_latitude(tee):
              302, -283, -229, 223, 223, -220, -220, -185, 181,
              -177, 176, 166, -164, 132, -119, 115, 107]
     beta = (deg(1/1000000) *
-            sigma([sine_coefficients, 
+            sigma([sine_coefficients,
                    args_lunar_elongation,
                    args_solar_anomaly,
                    args_lunar_anomaly,
@@ -4786,7 +4786,7 @@ def `nth_new_moon(n):
                          lunar_coeff, moon_coeff],
                         lambda v, w, x, y, z: (v *
                                     pow(cap_E, w) *
-                                    sin_degrees((x * solar_anomaly) + 
+                                    sin_degrees((x * solar_anomaly) +
                                                 (y * lunar_anomaly) +
                                                 (z * moon_argument)))))
     add_const = [mpf(251.88), mpf(251.83), mpf(349.42), mpf(84.66),
@@ -4906,7 +4906,7 @@ def `lunar_altitude(tee, location):
         (sin_degrees(phi) * sin_degrees(delta)) +
         (cosine_degrees(phi) * cosine_degrees(delta) * cosine_degrees(cap_H)))
     return mod(altitude + deg(180), 360) - deg(180)
- 
+
 
 # see lines 3764-3813 in calendrica-3.0.cl
 def `lunar_distance(tee):
@@ -4951,7 +4951,7 @@ def `lunar_distance(tee):
                          args_lunar_anomaly,
                          args_moon_node],
                         lambda v, w, x, y, z: (v *
-                                    pow(cap_E, abs(x)) * 
+                                    pow(cap_E, abs(x)) *
                                     cosine_degrees((w * cap_D) +
                                                    (x * cap_M) +
                                                    (y * cap_M_prime) +
@@ -5086,7 +5086,7 @@ def `fixed_from_arithmetic_persian(p_date):
     year   = mod(y, 2820) + 474
     temp   = (31 * (month - 1)) if (month <= 7) else ((30 * (month - 1)) + 6)
 
-    return ((PERSIAN_EPOCH - 1) 
+    return ((PERSIAN_EPOCH - 1)
             + (1029983 * quotient(y, 2820))
             + (365 * (year - 1))
             + quotient((31 * year) - 5, 128)
@@ -5124,7 +5124,7 @@ def `naw_ruz(g_year):
     y = (persian_year - 1) if (persian_year <= 0) else persian_year
     return fixed_from_persian(persian_date(y, 1, 1))
 
-@ 
+@
 <<persian calendar unit test>>=
 
 @
@@ -5137,7 +5137,7 @@ from appendixCUnitTest import AppendixCTable3TestCaseBase
 <<execute tests>>
 
 
-@ 
+@
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Bahai Calendar}
@@ -5321,7 +5321,7 @@ def `feast_of_ridvan(g_year):
     return fixed_from_future_bahai(bahai_date(major, cycle, year, 2, 13))
 
 
-@ 
+@
 <<bahai calendar unit test>>=
 
 @
@@ -5371,7 +5371,7 @@ to spot that the \py\ implementation was using mid\textbf{day}
 instaed of mid\textbf{night}!
 <<french revolutionary calendar unit test>>=
 def testMidnightInParis(self):
-    d = fixed_from_gregorian(gregorian_date(1992,OCTOBER, 13)) 
+    d = fixed_from_gregorian(gregorian_date(1992,OCTOBER, 13))
     self.assertEqual(midnight_in_paris(d), d+1)
 
 
@@ -5383,7 +5383,7 @@ def `french_new_year_on_or_before(date):
     """Return fixed date of French Revolutionary New Year on or
        before fixed date, date."""
     approx = estimate_prior_solar_longitude(AUTUMN, midnight_in_paris(date))
-    return next(ifloor(approx) - 1, 
+    return next(ifloor(approx) - 1,
                 lambda day: AUTUMN <= solar_longitude(midnight_in_paris(day)))
 
 # see lines 4254-4267 in calendrica-3.0.cl
@@ -5393,8 +5393,8 @@ def `fixed_from_french(f_date):
     day   = standard_day(f_date)
     year  = standard_year(f_date)
     new_year = french_new_year_on_or_before(
-                  ifloor(FRENCH_EPOCH + 
-                        180 + 
+                  ifloor(FRENCH_EPOCH +
+                        180 +
                         MEAN_TROPICAL_YEAR * (year - 1)))
     return new_year - 1 + 30 * (month - 1) + day
 
@@ -5411,7 +5411,7 @@ def `french_from_fixed(date):
 def `is_arithmetic_french_leap_year(f_year):
     """Return True if year, f_year, is a leap year on the French
        Revolutionary calendar."""
-    return ((mod(f_year, 4) == 0)                        and 
+    return ((mod(f_year, 4) == 0)                        and
             (mod(f_year, 400) not in [100, 200, 300])  and
             (mod(f_year, 4000) != 0))
 
@@ -5440,14 +5440,14 @@ def `arithmetic_french_from_fixed(date):
               if (date <
                   fixed_from_arithmetic_french(french_date(approx, 1, 1)))
               else approx)
-    month  = 1 + quotient(date - 
+    month  = 1 + quotient(date -
                      fixed_from_arithmetic_french(french_date(year, 1, 1)), 30)
     day    = date - fixed_from_arithmetic_french(
                            french_date(year, month, 1)) + 1
     return french_date(year, month, day)
 
 
-@ 
+@
 <<french revolutionary calendar unit test>>=
 
 @
@@ -5867,7 +5867,7 @@ def `vietnamese_location(tee):
                         mt(12), days_from_hours(z))
 
 
-@ 
+@
 <<chinese calendar unit test>>=
 #############################################
 # Tests other than the ones from Appendix C #
@@ -6104,7 +6104,7 @@ def `fixed_from_hindu_solar(s_date):
 
 # see lines 5046-5074 in calendrica-3.0.cl
 def `hindu_lunar_from_fixed(date):
-    """Return the Hindu lunar date, new_moon scheme, 
+    """Return the Hindu lunar date, new_moon scheme,
     equivalent to fixed date, date."""
     critical = hindu_sunrise(date)
     day      = hindu_lunar_day_from_moment(critical)
@@ -6231,7 +6231,7 @@ def `hindu_solar_sidereal_difference(date):
 # see lines 5218-5228 in calendrica-3.0.cl
 def `hindu_sunrise(date):
     """Return the sunrise at hindu_location on date, date."""
-    return (date + days_from_hours(6) + 
+    return (date + days_from_hours(6) +
             ((longitude(UJJAIN) - longitude(HINDU_LOCATION)) / deg(360)) -
             hindu_equation_of_time(date) +
             ((1577917828/1582237828 / deg(360)) *
@@ -6241,7 +6241,7 @@ def `hindu_sunrise(date):
 
 # see lines 5230-5244 in calendrica-3.0.cl
 def `hindu_fullmoon_from_fixed(date):
-    """Return the Hindu lunar date, full_moon scheme, 
+    """Return the Hindu lunar date, full_moon scheme,
     equivalent to fixed date, date."""
     l_date     = hindu_lunar_from_fixed(date)
     year       = hindu_lunar_year(l_date)
@@ -6296,7 +6296,7 @@ def `alt_hindu_sunrise(date):
 # see lines 5282-5292 in calendrica-3.0.cl
 def `hindu_sunset(date):
     """Return sunset at HINDU_LOCATION on date, date."""
-    return (date + days_from_hours(18) + 
+    return (date + days_from_hours(18) +
             ((longitude(UJJAIN) - longitude(HINDU_LOCATION)) / deg(360)) -
             hindu_equation_of_time(date) +
             (((1577917828/1582237828) / deg(360)) *
@@ -6368,7 +6368,7 @@ def `astro_hindu_solar_from_fixed(date):
 
 # see lines 5359-5375 in calendrica-3.0.cl
 def `fixed_from_astro_hindu_solar(s_date):
-    """Return the fixed date corresponding to Astronomical 
+    """Return the fixed date corresponding to Astronomical
     Hindu solar date (Tamil rule; Saka era)."""
     month = standard_month(s_date)
     day   = standard_day(s_date)
@@ -6642,7 +6642,7 @@ def `sacred_wednesdays_in_range(range):
     else:
         return []
 
-@ 
+@
 <<modern hindu calendars unit test>>=
 
 @
@@ -6727,7 +6727,7 @@ def `tibetan_moon_equation(alpha):
     else:
         return ((mod(alpha, 1) * tibetan_moon_equation(ceiling(alpha))) +
                 (mod(-alpha, 1) * tibetan_moon_equation(ifloor(alpha))))
-    
+
 
 # see lines 5733-5755 in calendrica-3.0.cl
 def `fixed_from_tibetan(t_date):
@@ -6781,7 +6781,7 @@ def `tibetan_from_fixed(date):
     else:
         temp = month0
     month = amod(temp, 12)
-    
+
     if ((day > day0) and (month0 == 1)):
         year = year0 - 1
     elif (leap_month and (month0 == 12)):
@@ -6821,7 +6821,7 @@ def `tibetan_new_year(g_year):
 
 
 
-@ 
+@
 <<tibetan calendar unit test>>=
 
 @
@@ -6973,7 +6973,7 @@ def `classical_passover_eve(g_year):
     return observational_hebrew_new_year(g_year) + 13
 
 
-@ 
+@
 <<coda>>=
 # That's all folks!
 
@@ -6991,7 +6991,7 @@ class `AstronomicalLunarCalendarsTestCase(unittest.TestCase):
     <<astronomical lunar tests>>
 
 
-@ 
+@
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Appendix C test data and unit tests}
@@ -7009,7 +7009,7 @@ sed -e 's/\$//g' -e 's/\\//g' \
     -e's/[    ][      ]*\&[   ][      ]*/,/g' \
     -e 's/multicolumn{4}{c}{fun{bogus}}/bogus,bogus,bogus,bogus/g'
 
-@ 
+@
 
 <<appendixCUnitTest.py>>=
 # <<generated code warning>>
@@ -7106,19 +7106,19 @@ class `AppendixCTable1TestCase(AppendixCTable1TestCaseBase, unittest.TestCase):
     <<test armenian appendix c>>
     <<test coptic appendix c>>
 
-@ 
+@
 <<basic code unit test>>=
 class `BasicAppendixCTestCase(AppendixCTable1TestCaseBase, unittest.TestCase):
     <<test basic appendix c>>
 
-@ 
+@
 <<test basic appendix c>>=
 def `testWeekdays(self):
     for i in range(len(self.rd)):
         # weekdays
         self.assertEqual(day_of_week_from_fixed(self.rd[i]), self.wd[i])
 
-@ 
+@
 <<julian calendar unit test>>=
 class `JulianDayAppendixCTestCase(AppendixCTable1TestCaseBase,
                                   unittest.TestCase):
@@ -7136,13 +7136,13 @@ def `testJulianDay(self):
         self.assertEqual(fixed_from_mjd(self.mjd[i]), self.rd[i])
 
 
-@ 
+@
 <<gregorian calendar unit test>>=
 class `GregorianAppendixCTestCase(AppendixCTable1TestCaseBase,
                                   unittest.TestCase):
     <<test gregorian appendix c>>
 
-@ 
+@
 <<test gregorian appendix c>>=
 def `testGregorian(self):
     for i in range(len(self.rd)):
@@ -7159,19 +7159,19 @@ def `testAltGregorian(self):
             alt_gregorian_year_from_fixed(self.rd[i]),
             standard_year(self.gd[i]))
 
-@ 
+@
 <<iso calendar unit test>>=
 class `IsoAppendixCTestCase(AppendixCTable1TestCaseBase, unittest.TestCase):
     <<test iso appendix c>>
 
-@ 
+@
 <<test iso appendix c>>=
 def `testIso(self):
     for i in range(len(self.rd)):
         self.assertEqual(iso_from_fixed(self.rd[i]), self.isod[i])
         self.assertEqual(fixed_from_iso(self.isod[i]), self.rd[i])
 
-@ 
+@
 <<test julian appendix c>>=
 def `testJulian(self):
     for i in range(len(self.rd)):
@@ -7187,7 +7187,7 @@ def `testJulian(self):
 class `JulianAppendixCTestCase(AppendixCTable1TestCaseBase):
     <<test julian appendix c>>
 
-@ 
+@
 <<test egyptian appendix c>>=
 def `testEgyptian(self):
     for i in range(len(self.rd)):
@@ -7195,7 +7195,7 @@ def `testEgyptian(self):
         self.assertEqual(fixed_from_egyptian(self.ed[i]), self.rd[i])
 
 
-@ 
+@
 <<test armenian appendix c>>=
 def `testArmenian(self):
     for i in range(len(self.rd)):
@@ -7203,7 +7203,7 @@ def `testArmenian(self):
         self.assertEqual(fixed_from_armenian(self.ad[i]), self.rd[i])
 
 
-@ 
+@
 <<egyptian and armenian calendars unit test>>=
 class `ArmeniamAppendixCTestCase(AppendixCTable1TestCaseBase):
    <<test armenian appendix c>>
@@ -7211,12 +7211,12 @@ class `ArmeniamAppendixCTestCase(AppendixCTable1TestCaseBase):
 class `EgyptianAppendixCTestCase(AppendixCTable1TestCaseBase):
    <<test egyptian appendix c>>
 
-@ 
+@
 <<coptic and ethiopic calendars unit test>>=
 class `CopticAppendixCTestCase(AppendixCTable1TestCaseBase):
     <<test coptic appendix c>>
 
-@ 
+@
 <<test coptic appendix c>>=
 def `testCoptic(self):
     for i in range(len(self.rd)):
@@ -7224,7 +7224,7 @@ def `testCoptic(self):
         self.assertEqual(fixed_from_coptic(self.cd[i]), self.rd[i])
 
 
-@ 
+@
 The second is for Ethiopic, Islamic (Arithmetic and Observational),
 Bahai, Future Bahai, Mayan (Long count, Haab and Tzolkin), Aztec
 (Xihuitl and Tonalpohualli).
@@ -7273,7 +7273,7 @@ class `AppendixCTable2TestCaseBase():
             self.at.append(
                 aztec_tonalpohualli_date(int(row[31]), int(row[32])))
 
- 
+
 class `AppendixCTable2TestCase(AppendixCTable2TestCaseBase,
                                unittest.TestCase):
     <<test ethiopic appendix c>>
@@ -7284,8 +7284,8 @@ class `AppendixCTable2TestCase(AppendixCTable2TestCaseBase,
 
     <<test mayan appendix c>>
 
- 
-@ 
+
+@
 <<coptic and ethiopic calendars unit test>>=
 class `EthiopicAppendixCTestCase(AppendixCTable2TestCaseBase,
                                  unittest.TestCase):
@@ -7299,13 +7299,13 @@ def `testEthiopic(self):
         self.assertEqual(ethiopic_from_fixed(self.rd[i]), self.ed[i])
         self.assertEqual(fixed_from_ethiopic(self.ed[i]), self.rd[i])
 
-@ 
+@
 <<islamic calendar unit test>>=
 class `IslamicAppendixCTestCase(AppendixCTable2TestCaseBase,
                                 unittest.TestCase):
     <<test islamic appendix c>>
 
-@ 
+@
 <<test islamic appendix c>>=
 def `testIslamic(self):
     for i in range(len(self.rd)):
@@ -7318,7 +7318,7 @@ def `testIslamic(self):
         self.assertEqual(
             observational_islamic_from_fixed(self.rd[i]), self.io[i])
 
-@ 
+@
 <<bahai calendar unit test>>=
 class `BahaiAppendixCTestCase(AppendixCTable2TestCaseBase,
                               unittest.TestCase):
@@ -7335,13 +7335,13 @@ def `testBahai(self):
         self.assertEqual(future_bahai_from_fixed(self.rd[i]), self.bf[i])
         self.assertEqual(fixed_from_future_bahai(self.bf[i]), self.rd[i])
 
-@ 
+@
 <<mayan calendars unit test>>=
 class `MayanAppendixCTestCase(AppendixCTable2TestCaseBase,
                               unittest.TestCase):
     <<test mayan appendix c>>
 
-@ 
+@
 <<test mayan appendix c>>=
 def `testMayan(self):
     for i in range(len(self.rd)):
@@ -7363,9 +7363,9 @@ def `testAztec(self):
         self.assertEqual(
             aztec_tonalpohualli_from_fixed(self.rd[i]), self.at[i])
 
-@ 
+@
 The third is for Hebrew (Standard and observational), Easter (Julian,
-Gregorian, Astronomical), 
+Gregorian, Astronomical),
 Balinese Pawukon, Persian (Astronomical and arithmetic) and French
 Revolutionary (original and modified).
 <<appendixCTable3Tests>>=
@@ -7424,7 +7424,7 @@ class `AppendixCTable3TestCaseBase():
                                         int(row[36]),
                                         int(row[37])))
 
- 
+
 class `AppendixCTable3TestCase(AppendixCTable3TestCaseBase,
                                unittest.TestCase):
     <<test hebrew appendix c>>
@@ -7437,13 +7437,13 @@ class `AppendixCTable3TestCase(AppendixCTable3TestCaseBase,
 
     <<test french appendix c>>
 
-@ 
+@
 <<hebrew calendar unit test>>=
 class `HebrewAppendixCTestCase(AppendixCTable3TestCaseBase,
                                unittest.TestCase):
     <<test hebrew appendix c>>
 
-@ 
+@
 <<test hebrew appendix c>>=
 def `testHebrew(self):
     for i in range(len(self.rd)):
@@ -7456,7 +7456,7 @@ def `testHebrew(self):
             fixed_from_observational_hebrew(self.ho[i]), self.rd[i])
 
 
-@ 
+@
 <<ecclesiastical calendars unit test>>=
 class `EasterAppendixCTestCase(AppendixCTable3TestCaseBase,
                                unittest.TestCase):
@@ -7483,7 +7483,7 @@ def `testEaster(self):
                    gregorian_year_from_fixed(self.rd[i]))),
              self.ae[i])
 
-@ 
+@
 <<balinese calendar unit test>>=
 class `BalineseAppendixCTestCase(AppendixCTable3TestCaseBase):
     <<test balinese appendix c>>
@@ -7494,7 +7494,7 @@ def `testBalinese(self):
     for i in range(len(self.rd)):
         self.assertEqual(bali_pawukon_from_fixed(self.rd[i]), self.bd[i])
 
-@ 
+@
 <<persian calendar unit test>>=
 class `PersianAppendixCTestCase(AppendixCTable3TestCaseBase,
                                 unittest.TestCase):
@@ -7513,12 +7513,12 @@ def `testPersian(self):
         self.assertEqual(persian_from_fixed(self.rd[i]), self.pas[i])
         self.assertEqual(fixed_from_persian(self.pas[i]), self.rd[i])
 
-@ 
+@
 <<french revolutionary calendar unit test>>=
 class `FrenchRevolutionaryAppendixCTestCase(AppendixCTable3TestCaseBase,
                                             unittest.TestCase):
     <<test french appendix c>>
-@ 
+@
 <<test french appendix c>>=
 #def assertEqual(one, two, msg=""):
 #    print one, two
@@ -7532,7 +7532,7 @@ def `testFrenchRevolutionary(self):
         self.assertEqual(fixed_from_arithmetic_french(self.frm[i]), self.rd[i])
         self.assertEqual(arithmetic_french_from_fixed(self.rd[i]), self.frm[i])
 
-@ 
+@
 The fourth is for Chinese \ldots
 <<appendixCTable4Tests>>=
 class `AppendixCTable4TestCaseBase():
@@ -7592,7 +7592,7 @@ class `AppendixCTable4TestCaseBase():
                                         self._toBoolean(row[34]),
                                         int(row[35]),
                                         self._toBoolean(row[36])))
- 
+
 class `AppendixCTable4TestCase(AppendixCTable4TestCaseBase,
                                unittest.TestCase):
     <<test chinese appendix c>>
@@ -7601,13 +7601,13 @@ class `AppendixCTable4TestCase(AppendixCTable4TestCaseBase,
     <<test tibetan appendix c>>
 
 
-@ 
+@
 <<chinese calendar unit test>>=
 class `ChineseAppendixCTestCase(AppendixCTable4TestCaseBase,
                                 unittest.TestCase):
     <<test chinese appendix c>>
 
-@ 
+@
 <<test chinese appendix c>>=
 def `testChinese(self):
     for i in range(len(self.rd)):
@@ -7617,13 +7617,13 @@ def `testChinese(self):
         self.assertAlmostEqual(
             major_solar_term_on_or_after(self.rd[i]), self.ms[i], 6)
 
-@ 
+@
 <<old hindu calendars unit test>>=
 class `OldHinduAppendixCTestCase(AppendixCTable4TestCaseBase,
                                  unittest.TestCase):
     <<test old hindu appendix c>>
 
-@ 
+@
 <<test old hindu appendix c>>=
 def `testOldHindu(self):
     for i in range(len(self.rd)):
@@ -7635,13 +7635,13 @@ def `testOldHindu(self):
         self.assertEqual(old_hindu_lunar_from_fixed(self.rd[i]), self.ohl[i])
 
 
-@ 
+@
 <<modern hindu calendars unit test>>=
 class `ModernHinduAppendixCTestCase(AppendixCTable4TestCaseBase,
                                     unittest.TestCase):
     <<test modern hindu appendix c>>
 
-@ 
+@
 <<test modern hindu appendix c>>=
 def `testHinduSolarModernToFixed(self):
     for i in range(len(self.rd)):
@@ -7689,12 +7689,12 @@ def `testHinduLunisolarAstronomicalFromFixed(self):
         #    astronomical
         self.assertEqual(astro_hindu_lunar_from_fixed(self.rd[i]), self.ahl[i])
 
-@ 
+@
 <<tibetan calendar unit test>>=
 class `TibetanAppendixCTestCase(AppendixCTable4TestCaseBase, unittest.TestCase):
     <<test tibetan appendix c>>
 
-@ 
+@
 <<test tibetan appendix c>>=
 def `testTibetan(self):
     for i in range(len(self.rd)):
@@ -7702,7 +7702,7 @@ def `testTibetan(self):
         self.assertEqual(tibetan_from_fixed(self.rd[i]), self.td[i])
 
 
-@ 
+@
 The fifth is for Astronomical calculations
 <<appendixCTable5Tests>>=
 class `AppendixCTable5TestCaseBase():
@@ -7738,19 +7738,19 @@ class `AppendixCTable5TestCaseBase():
         for row in reader1:
             self.nnm.append(float(row[1]))
 
- 
+
 class `AppendixCTable5TestCase(AppendixCTable5TestCaseBase,
                                unittest.TestCase):
     <<test astronomy appendix c>>
 
 
-@ 
+@
 <<time and astronomy unit test>>=
 class `AstronomyAppendixCTestCase(AppendixCTable5TestCaseBase,
                                   unittest.TestCase):
     <<test astronomy appendix c>>
 
-@ 
+@
 <<test astronomy appendix c>>=
 def `testSolarLongitude(self):
     for i in range(len(self.rd)):
@@ -7805,7 +7805,7 @@ def `testSunsetInJerusalem(self):
              float(self.sij[i]),
              6)
 
-@ 
+@
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Test Coverage}
@@ -7826,13 +7826,13 @@ coverage: pycalcaltests.py appendixCUnitTest.py testdata
 	coverage -b -i -d html pycalcal.py # HTML report for pycalcal.py
 
 
-@ 
+@
 \section{Cross checking}
 The following scripts have been used to generate and check the initial
 set of function signatures for the project.
 
 \subsection{Generating all function signatures}
-The follwing command will generate all \py\ function signatures from \cl\ 
+The follwing command will generate all \py\ function signatures from \cl\
 counterparts:
 <<extractcc3signatures>>=
 # <<generated code warning>>
@@ -7852,7 +7852,7 @@ sed \
 <<extractcalcalsignatures>>=
 cat pycalcal.py | grep '^def '
 
-@ 
+@
 The idea is to extract all functions defined in {calendrica-3.0.cl}
 using {extractcc3signatures} and compare them with the ones
 in {pycalcal.py} like:
@@ -8252,7 +8252,7 @@ I make sure I implement all the algorithms and how I pair \cl\ code and
 \py\ code..
 
 
-@ 
+@
 %%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%
 \section{Inserting snippets of \cl\ code}
@@ -8263,12 +8263,12 @@ to the relevant \py\ counterpart.
 
 I created a sort of pre-processor for \nw: it allows to
 write a code chunck reference like \texttt{\snippet} and to obtain
-the insertion of a portion of a file. 
+the insertion of a portion of a file.
 Its semantic is: ``Insert the content of file 'file' from line 'x' to
-line 'y'\,''. 
+line 'y'\,''.
 
 The preprocessor is called \texttt{premarkup} and is defined as
-follows: 
+follows:
 <<premarkup>>=
 #! /bin/awk -f
 # <<generated code warning>>
@@ -8290,7 +8290,7 @@ follows:
 # match and print all the rest
 1
 
-@ 
+@
 Note that it uses other two scripts, \texttt{prefix} and
 \texttt{excerpt}, to insert and comment out the relevant snippet of code.
 <<prefix>>=
@@ -8323,7 +8323,7 @@ shift $(($OPTIND - 1))
 if (( $# > 1 ))
 then
     return 1
-fi 
+fi
 
 blanks="$*"
 
@@ -8340,7 +8340,7 @@ prefix:
 	notangle -Rprefix $(NW_MAIN) $(CPIF) prefix
 	-chmod ug+x prefix
 
-@ 
+@
 \texttt{Excerpt}, a simple invokation of \texttt{sed}:
 <<excerpt>>=
 #!/bin/sh
@@ -8352,7 +8352,7 @@ prefix:
 sed -n $1,$2p $3
 #$ this is to fake emacs in nw source
 
-@ 
+@
 An example of use of \texttt{premarkup} is as follows:
 \begin{verbatim}
 prompt> premarkup pycalcal.nw | noweave -n -delay - | cpif pycalcal.tex
@@ -8368,7 +8368,7 @@ excerpt:
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \section{How to avoid \nw\ from indexing comments: HACK?}
-\label{sec:nocomment} 
+\label{sec:nocomment}
 The problem with \nw\ indexing is that comments are parsed as well and
 I do not like to get index entries in \cl\ code.
 One possible hack is to create indexing info from a copy of the
@@ -8412,7 +8412,7 @@ something like:
 # match and print all the rest
 1
 
-@ 
+@
 The relevant Makefile targets are:
 <<Makefile: blankpremarkup>>=
 blankpremarkup: prefix blankexcerpt
@@ -8560,7 +8560,7 @@ NW_ALL=$(NW_MAIN) $(NW_SRC)
 .PRECIOUS: %.aux %.bbl
 
 .PHONY : all
-all: tools code tests doc 
+all: tools code tests doc
 
 .PHONY : tools
 tools:
@@ -8606,6 +8606,7 @@ figures: fig_ra-dec.pdf fig_ecliptic.pdf fig_alt-az.pdf
 
 
 <<Makefile: distro>>
+<<Makefile: package>>
 <<Makefile: unit tests and targets>>
 <<Makefile: cross checks>>
 <<Makefile: tools>>
@@ -8625,7 +8626,7 @@ calendrica.py: $(NW_MAIN:.nw=.py)
 <<Makefile: distro>>=
 ###############################
 DISTRO_FILES=$(NW_MAIN) $(NW_MAIN:.nw=.py) $(NW_MAIN:.nw=.pdf) \
-		README INSTALL STATUS COPYRIGHT_DERSHOWITZ_REINGOLD \
+		Readme.md Istall.md STATUS COPYRIGHT_DERSHOWITZ_REINGOLD \
 		makemake.sh \
 		Makefile \
 		calendrica-3.0.cl \
@@ -8635,11 +8636,24 @@ DISTRO_FILES=$(NW_MAIN) $(NW_MAIN:.nw=.py) $(NW_MAIN:.nw=.pdf) \
 		figure.mp \
 		astro.mp \
 		alt-az.asy \
-                testSunset.cl
+		testSunset.cl
 
 .PHONY : distro
 distro: all
 	tar -czf pycalcal_$$(date +"%Y%m%d%H%M").tar.gz $(DISTRO_FILES)
+###############################
+
+@ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+<<Makefile: package>>=
+###############################
+.PHONY : package
+package: code doc
+	-mkdir -p dist/pycalcal
+	-touch dist/pycalcal/__init__.py
+	-cp pycalcal.py dist/pycalcal
+	-cp Readme.md dist/pycalcal
+	-cp pycalcal.pdf dist/pycalcal
+
 ###############################
 
 
@@ -8668,7 +8682,7 @@ check1by1: code tests
 
 # create all unit test files
 .PHONY : ut
-ut: 
+ut:
 	$(MAKE)  $$(cat pycalcal.nw | grep -e '^@<<.*UnitTest.py>>=' | \
 		grep -v appendix | sed -e 's/@<<//g' -e 's/>>=//g')
 #	$(MAKE) $(UNIT_TEST_FILES)
@@ -8928,9 +8942,9 @@ clean:
 		pycalcal.idx *UnitTest.py *UnitTest_result.txt \
 		html/ calendrica/ pycalcal*.gz figure.mpx \
 		$$(ls | grep  "figure.[0-9][0-9]*") figure-*.pdf fig_*.pdf \
-		*.mps *mpx fig_*.0 SConstruct testSunset.cl
+		*.mps *mpx fig_*.0 SConstruct testSunset.cl dist
 
-# ask to remove all files not recognized by hg
+# ask to remove all files not in repo
 xclean: clean
 	for f in $$(git status -s | grep -e '^??' | sed -e 's/^?? //g'); \
    do \
@@ -8938,7 +8952,7 @@ xclean: clean
    done
 
 
-@ 
+@
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \section{SConstruct It}
@@ -8973,7 +8987,7 @@ pipe      = ' | '
 # noweb install dir
 noweb_home = '/usr/local/noweb/bin/'
 
- 
+
 <<scons notangle>>=
 # notangle consts
 ntfile    = noweb_home + 'notangle'
@@ -9114,7 +9128,7 @@ A snippet of \cl\ code from Prof.~Reingold.
     (format-time (CC3:sunrise *moment* CC3:paris))
   (format t "~&error on the command line~&"))
 
-@ 
+@
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Small differences or errors?}
@@ -9213,7 +9227,7 @@ mpf('279283278.7852416')
 \chapter{Version control}
 My code is now at \url{http://espinielli.github.com/pycalcal}. As you can guess
 from the URL, it is on \href{http://github.com}{GitHub} and I use
-\texttt{git}. 
+\texttt{git}.
 
 \chapter{Old Version control}
 I used to store my code in google code repo, \url{http://code.google.com/p/pycalcal/},
