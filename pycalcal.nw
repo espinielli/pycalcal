@@ -348,12 +348,15 @@ Author: Enrico Spinielli
 # <<generated code warning>>
 
 @ The following is where I control the project version number
-in a centralised way. The version is number is composed of 3
+in a centralised way.
++The \href{http://legacy.python.org/dev/peps/pep-0440/#public-version-identifiers}{version scheme}
++follows PEP440.
++The version is number is composed of 3
 integers separated by a dot, '.' which stand for
 \begin{quote}
 @<major version>.<minor version>.<increment>
 \end{quote}
-@ Then version number \texttt{0.9.2} means revision $2$ of project
+@ Then version number \texttt{0.9.2b1} means beta $1$ of revision $2$ of project
 version $0.9$.
 <<project version>>=
 1.0.0
