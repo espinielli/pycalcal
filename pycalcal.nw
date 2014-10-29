@@ -238,7 +238,7 @@ examples spread in the book~\cite{calendar:calcal}, its Appendix C or
 devised by myself.
 <<pycalcaltests.py>>=
 # <<generated code warning>>
-<<LICENSE>>
+# <<LICENSE>>
 from pycalcal import *
 from appendixCUnitTest import AppendixCTable1TestCaseBase
 from appendixCUnitTest import AppendixCTable2TestCaseBase
@@ -344,7 +344,7 @@ License: MIT License for my work, but read the one
 Author: Enrico Spinielli
 """
 
-<<LICENSE>>
+# <<LICENSE>>
 # <<generated code warning>>
 
 @ The following is where I control the project version number
@@ -8430,6 +8430,91 @@ blankexcerpt:
 @
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Setup.py}
+\label{sec:setup.py}
+`setup.py` is used to describe how to build, distribute and install a Python package.
+
+<<setup.py>>=
+from setuptools import setup, find_packages  # Always prefer setuptools over distutils
+from codecs import open  # To use a consistent encoding
+from os import path
+
+here = path.abspath(path.dirname(__file__))
+
+# Get the long description from the relevant file
+with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
+    long_description = f.read()
+
+setup(
+    name='pycalcal',
+
+    # Versions should comply with PEP440.  See
+    # http://packaging.python.org/en/latest/tutorial.html#version
+    version='<<project version>>',
+
+    description='A Python library that makes it easy to convert dates from/to 31 different calendars.',
+    long_description=long_description,
+
+    url='http://espinielli.github.io/pycalcal/',
+
+    author='Enrico Spinielli',
+    author_email='enrico.spinielli+pycalcal@gmail.com',
+
+    license='MIT',
+
+    # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
+    classifiers=[
+        'Development Status :: 4 - Beta',
+
+        'Intended Audience :: Developers',
+        'Intended Audience :: Education',
+        'Topic :: Scientific/Engineering :: Astronomy',
+        'Topic :: Software Development :: Build Tools',
+        'Topic :: Utilities',
+
+        'License :: OSI Approved :: MIT License',
+
+        'Programming Language :: Python :: 2.7',
+    ],
+
+    # What does your project relate to?
+    keywords='calendar astronomy',
+
+    # You can just specify the packages manually here if your project is
+    # simple. Or you can use find_packages().
+    packages=find_packages(exclude=['contrib', 'docs', ]),
+
+    # List run-time dependencies here.
+    install_requires=[
+      'mpmath',
+    ],
+    test_suite='nose.collector',
+    tests_require=['nose'],
+    include_package_data=True,
+    zip_safe=False
+)
+@
+Other auxiliary files are:
+<<setup.cfg>>=
+[wheel]
+universal = 1
+@
+<<requirements.txt>>=
+wheel==0.23.0
+@
+<<tox.ini>>=
+[tox]
+envlist = py26, py27, py33, py34
+
+[testenv]
+setenv =
+    PYTHONPATH = {toxinidir}:{toxinidir}/pycalcal
+commands = python setup.py test
+deps =
+    -r{toxinidir}/requirements.txt
+@
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Make It Work}
 \label{sec:make}
 The Makefile I defined is minimalistically simple.
@@ -8604,7 +8689,17 @@ pycalcal.defs: $(NW_MAIN) premarkup
 
 ###############################
 .PHONY : figures
-figures: fig_ra-dec.pdf fig_ecliptic.pdf fig_alt-az.pdf
+figures:
+	$(MAKE) fig_ra-dec.pdf fig_ecliptic.pdf fig_alt-az.pdf
+
+fig_alt-az.pdf: fig_alt-az.asy
+	asy -tex pdflatex $<
+
+fig_ecliptic.pdf: fig_ecliptic.mp
+	mptopdf --latex $<
+
+fig_ra-dec.pdf: fig_ra-dec.mp
+	mptopdf --latex $<
 ###############################
 
 
@@ -8626,10 +8721,14 @@ calendrica.py: $(NW_MAIN:.nw=.py)
 	$(NOTANGLE) -filter btdefn -Rapp.yaml - $(CPIF) calendrica/app.yaml
 
 @ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The following targets are intended to define what is needed to package and distribute pycalcal.
+There are a couple of possibilities, a compressed tar or a package distribution for PyPi.
+
+The zipped distro target uses the definition of a list of files to tar.
 <<Makefile: distro>>=
 ###############################
 DISTRO_FILES=$(NW_MAIN) $(NW_MAIN:.nw=.py) $(NW_MAIN:.nw=.pdf) \
-		Readme.md Istall.md STATUS COPYRIGHT_DERSHOWITZ_REINGOLD \
+		README.md Istall.md STATUS COPYRIGHT_DERSHOWITZ_REINGOLD \
 		makemake.sh \
 		Makefile \
 		calendrica-3.0.cl \
@@ -8647,16 +8746,39 @@ distro: all
 ###############################
 
 @ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The preparation for PyPi distribution needs to extract `setup.py` and construct a directory structure for Python packages.
 <<Makefile: package>>=
 ###############################
 .PHONY : package
-package: code doc
-	-mkdir -p dist/pycalcal
-	-touch dist/pycalcal/__init__.py
-	-cp pycalcal.py dist/pycalcal
-	-cp Readme.md dist/pycalcal
-	-cp pycalcal.pdf dist/pycalcal
+package: code doc README.rst LICENSE tests setup.py setup.cfg tox.ini requirements.txt
+	-mkdir -p generated
+	-cp README.rst LICENSE setup.py setup.cfg requirements.txt tox.ini generated/
+	-mkdir -p generated/pycalcal
+	-touch generated/pycalcal/__init__.py
+	-cp pycalcal.py generated/pycalcal
+	-mkdir -p generated/docs
+	-cp pycalcal.pdf generated/docs
+	-mkdir -p generated/pycalcal/tests
+	-touch generated/pycalcal/tests/__init__.py
+	-cp pycalcaltests.py $(UNIT_TEST_FILES) appendixCUnitTest.py *.csv generated/pycalcal/tests
 
+README.rst:
+	pandoc -o $@ README.md
+
+LICENSE:
+	$(NOTANGLE) -filter btdefn -R$@ - $(CPIF) $@
+
+setup.py:
+	$(NOTANGLE) -filter btdefn -R$@ - $(CPIF) $@
+
+setup.cfg:
+	$(NOTANGLE) -filter btdefn -R$@ - $(CPIF) $@
+
+requirements.txt:
+	$(NOTANGLE) -filter btdefn -R$@ - $(CPIF) $@
+
+tox.ini:
+	$(NOTANGLE) -filter btdefn -R$@ - $(CPIF) $@
 ###############################
 
 
@@ -8945,7 +9067,8 @@ clean:
 		pycalcal.idx *UnitTest.py *UnitTest_result.txt \
 		html/ calendrica/ pycalcal*.gz figure.mpx \
 		$$(ls | grep  "figure.[0-9][0-9]*") figure-*.pdf fig_*.pdf \
-		*.mps *mpx fig_*.0 SConstruct testSunset.cl dist
+		*.mps *mpx fig_*.0 SConstruct testSunset.cl dist setup.py README.rst \
+		generated LICENSE setup.cfg requirements.txt tox.ini
 
 # ask to remove all files not in repo
 xclean: clean
