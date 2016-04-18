@@ -502,6 +502,104 @@
            (t (list sunday)))))
     (shift-days (append basic extra) n)))
 
+;; changed  (Errata 'August 08, 2011')
+(defun birkath-ha-hama (g-year)
+ ;; TYPE gregorian-year -> list-of-fixed-dates
+ ;; List of fixed date of Birkath ha-Hama occurring in
+ ;; Gregorian year g-year, if it occurs.
+  (let* ((moments (samuel-season-in-gregorian spring g-year)))
+    (if (and (not (equal moments nil))
+             (= (day-of-week-from-fixed
+                 (fixed-from-moment (first moments))) tuesday)
+             (= (time-from-moment (first moments)) (hr 18)))
+         (list (1+ (fixed-from-moment (first moments))))
+      nil)))
+
+(defun sh-ela (g-year)
+ ;; TYPE gregorian-year -> list-of-fixed-dates
+ ;; List of fixed dates of Sh'ela occurring in
+ ;; Gregorian year $g-year$.
+  (fixed-from-list-of-moments
+    (samuel-season-in-gregorian (angle 238 17 0) g-year)))
+
+(defun fixed-from-list-of-moments (ell)
+ ;; TYPE list-of-moments -> list-of-fixed-dates
+ ;; List of fixed dates corresponding to list ell
+ ;; of moments.
+  (if (equal ell nil)
+      nil
+    (append (list (fixed-from-moment (first ell)))
+            (fixed-from-list-of-moments (rest ell)))))
+
+(defun multiples-in-range (cap-L offset range)
+ ;; TYPE (real moment range) -> list-of-moments
+ ;; Those offset +k *cap-L that occur in range
+ ;; (but not at its very end).
+  (let* ((tee ;; First occurrence.
+          (+ offset (* cap-L
+                       (ceiling (/ (- (start range) offset)
+                                    cap-L))))))
+    (if (>= tee (end range))
+        nil
+      (append
+        (list tee)
+        (multiples-in-range
+          cap-L offset
+          (interval (+ (start range) cap-L)
+                    (end range)))))))
+
+(defun season-in-gregorian (season g-year cap-L start)
+ ;; TYPE (season gregorian-year real moment) -> list-of-moments
+ ;; Moments of season season in Gregorian year g-year.
+ ;; Tropical year is cap-L days, seasons are of equal length,
+ ;; and an occurrence of spring was at the moment start.
+  (multiples-in-range
+   cap-L
+   (+ start (* (/ season 360) cap-L))
+   (interval (gregorian-new-year g-year)
+             (gregorian-new-year (1+ g-year)))))
+
+(defun julian-season-in-gregorian (season g-year)
+ ;; TYPE (season gregorian-year) -> list-of-moments
+ ;; Moment(s) of Julian season season in Gregorian year g-year.
+  (season-in-gregorian season g-year
+                       (+ 365 (hr 6))
+                       (fixed-from-julian
+                        (julian-date (bce 1) march 23))))
+
+(defun samuel-season-in-gregorian (season g-year)
+ ;; TYPE (season gregorian-year) -> list-of-moments
+ ;; Moment(s) of season season in Gregorian year g-year
+ ;; per Samuel.
+  (season-in-gregorian season g-year
+                       (+ 365 (hr 6))
+                       (+ (fixed-from-hebrew
+                           (hebrew-date 1 adar 21))
+                          (hr 18))))
+
+(defun adda-season-in-gregorian (season g-year)
+ ;; TYPE (season gregorian-year) -> list-of-moments
+ ;; Moment(s) of season season in Gregorian year g-year
+ ;; per R. Adda bar Ahava.
+  (season-in-gregorian season g-year
+                       (+ 365 (hr (+ 5 3791/4104)))
+                       (+ (fixed-from-hebrew
+                           (hebrew-date 1 adar 28))
+                          (hr 18))))
+
+;; changed  (Errata 'November 10, 2012')
+(defun mayan-year-bearer-from-fixed (date)
+  ;; TYPE fixed-date -> mayan-tzolkin-name
+  ;; Year bearer of year containing fixed $date$.
+  ;; Returns bogus for uayeb.
+  (let* ((x (mayan-haab-on-or-before
+             (mayan-haab-date 1 0)
+             date)))
+    (if (= (mayan-haab-month (mayan-haab-from-fixed date))
+           19)
+        bogus
+      (mayan-tzolkin-name (mayan-tzolkin-from-fixed x)))))
+
 ;;;============================= History =======================================
 ;; 2009/11/19 Enrico Spinielli
 ;;   Extracted changes/enhancements from
