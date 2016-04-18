@@ -358,7 +358,7 @@
     (hebrew-date year month day)))
 
 ;; new  (Errata '4:08pm, November 15, 2009')
-(defun month-lenght (date location)
+(defun month-length (date location)
   (let ((moon (phasis-on-or-after (1+ date) location))
         (prev (phasis-on-or-before date location)))
     (- moon prev)))
@@ -386,7 +386,7 @@
   ;; Observational Islamic date (year month day)
   ;; corresponding to fixed $date$.
   (let* ((early (early-month? date islamic-location))
-         (long (and early (> (month-lenght date islamic-location) 29)))
+         (long (and early (> (month-length date islamic-location) 29)))
          (date-prime (if long (1+ date) date))
          (moon (phasis-on-or-before date-prime islamic-location))
          (elapsed-months
@@ -422,7 +422,7 @@
   ;; Observational Hebrew date (year month day)
   ;; corresponding to fixed $date$.
   (let* ((early (early-month? date hebrew-location))
-         (long (and early (> (month-lenght date hebrew-location) 29)))
+         (long (and early (> (month-length date hebrew-location) 29)))
          (date-prime (if long (1+ date) date))
          (moon (phasis-on-or-before date-prime hebrew-location))
          (g-year (gregorian-year-from-fixed date-prime))
