@@ -199,7 +199,7 @@
 ;; new  (Errata '4:08pm, November 15, 2009')
 (defun sidereal-lunar-longitude (tee)
   ;; TYPE moment -> angle
-  ;; Sidereal lunar longitude at monent $tee$.
+  ;; Sidereal lunar longitude at moment $tee$.
   (mod (+ (lunar-longitude tee)
           (- (precession tee))
           sidereal-start)
