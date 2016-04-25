@@ -1,8 +1,8 @@
 *PyCalCal* is a Python library that makes it easy:
 
 *   to convert dates from/to 31 different calendars
-*   to calculate special dates/times such as holidays, astronomical events (equinoxes,
-    solstices ...), sunrise/sunset
+*   to calculate special dates/times such as holidays, astronomical events
+    (equinoxes, solstices ...), sunrise/sunset
 *   to try it [online][PyCalCalOnline] (_experimental !!_)
 
 *PyCalCal* is an implementation in Python of _CALENDRICA 3.0_, which is the
@@ -22,8 +22,8 @@ Some of the algorithms are from:
 
 
 ### STATUS ###
-I, Enrico Spinielli, implemented PyCalCal for fun and to further assaporate the beauty of the
-work of the authors of the book.
+I, Enrico Spinielli, implemented PyCalCal for fun and to further glory in the
+beauty of the work of the authors of the book.
 Having said so, PyCalCal code is pretty well tested and usable.
 
 See '_STATUS_' file for further details.
@@ -53,8 +53,8 @@ Files '_dates[1-5].tex_', containing test data, have been kindly provided to me
 by Prof. Reingold.
 
 
-[CalCalBook]: http://www.cup.cam.ac.uk/catalogue/catalogue.asp?isbn=9780521702386 "Calendrical Calculations"
-[BookResPage]: http://www.cup.cam.ac.uk/catalogue/catalogue.asp?isbn=9780521702386&ss=res "Calendrical Calculations's resurce page at Cambridge University Press"
-[C3Zip]: http://www.cup.cam.ac.uk/resources/0521702380/5106_calendrica-3.0.cl.zip "Zip file of Calendrica 3.0 source at Cambridge University Press"
-[PyCalCalOnline]: http://calendrica.appspot.com "PyCalCal online appl"
+[CalCalBook]: http://www.cambridge.org/ch/academic/subjects/computer-science/computing-general-interest/calendrical-calculations-3rd-edition "Calendrical Calculations"
+[BookResPage]: http://www.cambridge.org/ch/academic/subjects/computer-science/computing-general-interest/calendrical-calculations-3rd-edition#resources "Calendrical Calculations's resource page at Cambridge University Press"
+[C3Zip]: http://www.cambridge.org/download_file/202891 "Zip file of Calendrica 3.0 source at Cambridge University Press"
+[PyCalCalOnline]: http://calendrica.appspot.com "PyCalCal online application"
 [BookCompanionSite]: http://emr.cs.iit.edu/home/reingold/calendar-book/third-edition/index.html "Calendrical Calculations' book companion site"

@@ -1,0 +1,14 @@
+*.csv
+*.py
+*.pyc
+Makefile
+SConstruct
+blankexcerpt
+blankpremarkup
+excerpt
+fig_alt-az_.pbsdat
+prefix
+premarkup
+testResult.txt
+testSunset.cl
+trasformLatexDates2Cvs
