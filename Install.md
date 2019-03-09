@@ -51,14 +51,14 @@ Here are the steps for buiding:
 >   $ ./makemake.sh
 
 2. generate the code:
->   $ make pycalca.py
+>   $ make pycalcal.py
 
 3. generate the doc:
 >   $ make figures
 >   $ make pycalcal.pdf
 
 4. run the tests:
->   $ make test
+>   $ make check 
 
 
 #summary Installation and Getting started instructions for PyCalCal.

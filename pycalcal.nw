@@ -236,7 +236,7 @@ The software is for now a single piece of text (a.k.a. a \py~file):
 @ There is as well a companion file with unit tests inspired by the
 examples spread in the book~\cite{calendar:calcal}, its Appendix C or
 devised by myself.
-<<pycalcaltests.py>>=
+<<test_pycalcal.py>>=
 # <<generated code warning>>
 # <<LICENSE>>
 from pycalcal import *
@@ -953,7 +953,7 @@ from appendixCUnitTest import AppendixCTable1TestCaseBase
 <<basic code unit test>>
 <<execute tests>>
 
-@ and grouped together so that they can be included in \texttt{pycalcaltests.py}
+@ and grouped together so that they can be included in \texttt{test\_pycalcal.py}
 <<basic code unit test>>=
 class BasicCodeTestCase(unittest.TestCase):
     <<basic code tests>>
@@ -7824,8 +7824,8 @@ coverage~\cite{coverage}.
 I defined a new target in Makefile to produce an HTML report
 <<Makefile: coverage target>>=
 .PHONY : coverage
-coverage: pycalcaltests.py appendixCUnitTest.py testdata
-	coverage -e -x pycalcaltests.py    # -e drop previous
+coverage: test_pycalcal.py appendixCUnitTest.py testdata
+	coverage -e -x test_pycalcal.py    # -e drop previous
 	coverage -b -i -d html pycalcal.py # HTML report for pycalcal.py
 
 
@@ -8358,7 +8358,7 @@ sed -n $1,$2p $3
 @
 An example of use of \texttt{premarkup} is as follows:
 \begin{verbatim}
-prompt> premarkup pycalcal.nw | noweave -n -delay - | cpif pycalcal.tex
+prompt> premarkup pycalcal.nw | noweave -filter 'sed "/^@use /s/_/\\\\_/g;/^@defn /s/_/\\\\_/g"' -n -delay - | cpif pycalcal.tex
 \end{verbatim}
 
 The target for Makefile is
@@ -8435,15 +8435,55 @@ blankexcerpt:
 `setup.py` is used to describe how to build, distribute and install a Python package.
 
 <<setup.py>>=
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from setuptools import setup, find_packages  # Always prefer setuptools over distutils
 from codecs import open  # To use a consistent encoding
 from os import path
+
+import sys
+
+from setuptools.command.test import test as TestCommand
+
+
+class PyTest(TestCommand):
+    user_options = [('pytest-args=', 'a', "Arguments to pass to py.test")]
+
+    def initialize_options(self):
+        TestCommand.initialize_options(self)
+        self.pytest_args = []
+
+    def finalize_options(self):
+        TestCommand.finalize_options(self)
+        self.test_args = []
+        self.test_suite = True
+
+    def run_tests(self):
+        #import here, cause outside the eggs aren't loaded
+        import pytest
+        errno = pytest.main(self.pytest_args)
+        sys.exit(errno)
+
+
 
 here = path.abspath(path.dirname(__file__))
 
 # Get the long description from the relevant file
 with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
-    long_description = f.read()
+    readme = f.read()
+
+with open(path.join(here, 'HISTORY.rst'), encoding='utf-8') as f:
+    history = f.read().replace('.. :changelog:', '')
+
+requirements = [i.strip() for i in open("requirements.txt").readlines()]
+
+#test_requirements = [
+#    "nose",
+#    "coverage",
+#]
+
+test_requirements=['pytest'],
 
 setup(
     name='pycalcal',
@@ -8453,7 +8493,7 @@ setup(
     version='<<project version>>',
 
     description='A Python library that makes it easy to convert dates from/to 31 different calendars.',
-    long_description=long_description,
+    long_description=readme + '\n\n' + history,
 
     url='http://espinielli.github.io/pycalcal/',
 
@@ -8485,11 +8525,10 @@ setup(
     packages=find_packages(exclude=['contrib', 'docs', ]),
 
     # List run-time dependencies here.
-    install_requires=[
-      'mpmath',
-    ],
-    test_suite='nose.collector',
-    tests_require=['nose'],
+    install_requires=requirements,
+#    test_suite='nose.collector',
+    tests_require=test_requirements,
+    cmdclass = {'test': PyTest},
     include_package_data=True,
     zip_safe=False
 )
@@ -8498,9 +8537,18 @@ Other auxiliary files are:
 <<setup.cfg>>=
 [wheel]
 universal = 1
+
+[nosetests]
+verbosity=1
+where=tests
+tests=tests
+detailed-errors=1
+with-coverage=1
+cover-package=nose-cover3
 @
 <<requirements.txt>>=
 wheel==0.23.0
+mpmath
 @
 <<tox.ini>>=
 [tox]
@@ -8574,7 +8622,7 @@ PREMARKUP=cat $(NW_MAIN)
 
 NOTANGLE_PURE=cat $(NW_MAIN) | notangle
 NOTANGLE=$(PREMARKUP) | notangle
-NOWEAVE=$(PREMARKUP)  | noweave -n -delay
+NOWEAVE=$(PREMARKUP)  | noweave -filter 'sed "/^@use /s/_/\\\\_/g;/^@defn /s/_/\\\\_/g"' -n -delay
 NODEFS=$(PREMARKUP)   | nodefs
 #LATEX=pdflatex --include-directory=$$(cygpath -w /usr/local/noweb/texmf)
 LATEX=latex
@@ -8659,7 +8707,7 @@ tools:
 
 
 .PHONY : code
-code: pycalcal.py pycalcaltests.py
+code: pycalcal.py test_pycalcal.py
 
 .PHONY : tests
 tests: testSunset.cl
@@ -8750,20 +8798,26 @@ The preparation for PyPi distribution needs to extract `setup.py` and construct 
 <<Makefile: package>>=
 ###############################
 .PHONY : package
-package: code doc README.rst LICENSE tests setup.py setup.cfg tox.ini requirements.txt
+package: code doc README.rst HISTORY.rst LICENSE tests setup.py setup.cfg tox.ini requirements.txt
 	-mkdir -p generated
-	-cp README.rst LICENSE setup.py setup.cfg requirements.txt tox.ini generated/
+	-cp README.rst HISTORY.rst LICENSE setup.py setup.cfg requirements.txt tox.ini generated/
+	-touch generated/MANIFEST.in
+	-echo "include README.rst" > generated/MANIFEST.in
 	-mkdir -p generated/pycalcal
 	-touch generated/pycalcal/__init__.py
+	-echo "from .pycalcal import *" > generated/pycalcal/__init__.py
 	-cp pycalcal.py generated/pycalcal
 	-mkdir -p generated/docs
 	-cp pycalcal.pdf generated/docs
-	-mkdir -p generated/pycalcal/tests
-	-touch generated/pycalcal/tests/__init__.py
-	-cp pycalcaltests.py $(UNIT_TEST_FILES) appendixCUnitTest.py *.csv generated/pycalcal/tests
+	-mkdir -p generated/tests
+	-touch generated/tests/__init__.py
+	-cp test_pycalcal.py $(UNIT_TEST_FILES) appendixCUnitTest.py *.csv generated/tests
 
 README.rst:
 	pandoc -o $@ README.md
+
+HISTORY.rst:
+	pandoc -o $@ HISTORY.md
 
 LICENSE:
 	$(NOTANGLE) -filter btdefn -R$@ - $(CPIF) $@
@@ -8786,7 +8840,7 @@ tox.ini:
 Unit test and target
 <<Makefile: unit tests and targets>>=
 ###############################
-pycalcaltests.py:
+test_pycalcal.py:
 	$(NOTANGLE) -filter btdefn -R$*.py - $(CPIF) $*.py
 
 testSunset.cl:
@@ -8795,7 +8849,7 @@ testSunset.cl:
 
 .PHONY : check
 check: code tests
-	python pycalcaltests.py 2>&1 | tee testResult.txt
+	python test_pycalcal.py 2>&1 | tee testResult.txt
 
 .PHONY : check1by1
 check1by1: code tests
@@ -9059,7 +9113,7 @@ sconstruct:
 clobber: clean
 
 clean:
-	rm -fR pycalcal.tex $(NW_MAIN:.nw=.py) pycalcaltests.py *.dvi *.aux *.log \
+	rm -fR pycalcal.tex $(NW_MAIN:.nw=.py) test_pycalcal.py *.dvi *.aux *.log \
 		*.blg *.toc *.bbl *~ *.pyc *.defs *.nwi premarkup prefix \
 		excerpt dates?.csv blankexcerpt blankpremarkup \
 		trasformLatexDates2Cvs pycalcal.pdf extractcc3signatures \
@@ -9068,7 +9122,7 @@ clean:
 		html/ calendrica/ pycalcal*.gz figure.mpx \
 		$$(ls | grep  "figure.[0-9][0-9]*") figure-*.pdf fig_*.pdf \
 		*.mps *mpx fig_*.0 SConstruct testSunset.cl dist setup.py README.rst \
-		generated LICENSE setup.cfg requirements.txt tox.ini
+		generated LICENSE setup.cfg requirements.txt tox.ini HISTORY.rst
 
 # ask to remove all files not in repo
 xclean: clean
@@ -9201,9 +9255,9 @@ pycalcal_code = dbg.NoTangle('pycalcal.py', 'pycalcal.nw',)
 # Requires(pycalcal_code, premarkup)
 Clean(pycalcal_code, Split('pycalcal.pyo pycalcal.pyc'))
 
-pycalcal_tests = builder.NoTangle('pycalcaltests.py', 'pycalcal.nw',)
+pycalcal_tests = builder.NoTangle('test_pycalcal.py', 'pycalcal.nw',)
 Requires(pycalcal_tests, [premarkup, pycalcal_code])
-Clean(pycalcal_tests, Split('pycalcaltests.pyo pycalcaltestst.pyc'))
+Clean(pycalcal_tests, Split('test_pycalcal.pyo pycalcaltestst.pyc'))
 
 pycalcal_latex = builder.NoWeave('pycalcal.tex', 'pycalcal.nw')
 Requires(pycalcal_latex, premarkup)
