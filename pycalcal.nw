@@ -6170,7 +6170,7 @@ def `hindu_equation_of_time(date):
 # see lines 5141-5155 in calendrica-3.0.cl
 def `hindu_ascensional_difference(date, location):
     """Return the difference between right and oblique ascension
-    of sun on date, date, at loacel, location."""
+    of sun on date, date, at location, location."""
     sin_delta = (1397/3438) * hindu_sine(hindu_tropical_longitude(date))
     phi = latitude(location)
     diurnal_radius = hindu_sine(deg(90) + hindu_arcsin(sin_delta))
