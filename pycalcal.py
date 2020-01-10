@@ -80,7 +80,7 @@ def ifloor(n):
 # naming it iround
 def iround(n):
     """Return the whole part of m/n."""
-    from __builtin__ import round
+    from builtins import round
     return int(round(n))
 
 
