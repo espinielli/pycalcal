@@ -1,4 +1,6 @@
 setup.py
+pycalcal/__init__.py
+pycalcal/pycalcal.py
 pycalcal.egg-info/PKG-INFO
 pycalcal.egg-info/SOURCES.txt
 pycalcal.egg-info/dependency_links.txt

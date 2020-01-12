@@ -1,5 +1,4 @@
 *.csv
-*.py
 *.pyc
 Makefile
 SConstruct
