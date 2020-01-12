@@ -1,10 +1,10 @@
 import setuptools
 
-with open("README.md", "r") as fh:
+with open("Readme.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="pycalcal", # Replace with your own username
+    name="pycalcal",
     version="0.0.1",
     description="Minimal package for using pycalcal.",
     long_description=long_description,
