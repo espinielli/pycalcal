@@ -172,14 +172,14 @@ bindingoffset=5mm]{geometry}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Literate Calendrical Calculations}
+\chapter{Literate \rlap{Calendrical Calculations}}
 \label{sec:goal}
 %\lettrine[lhang=1, nindent=0pt, lines=3]{I}{n}
-\lettrine[lines=3]{T}{his}
-document describes a \py~\cite{computer:language:python}
+% \lettrine[lines=3]{T}{his}
+This document describes a \py~\cite{computer:language:python}
 implementation of the calendrical algorithms described in
 the book \textit{Calendrical Calculations}~\cite{calendar:calcal}.
-According to the authors, the book is textit{the companion} text of
+According to the authors, the book is \textit{the companion} text of
 the algorithms implemented in the \cl\ package \texttt{CC3}.
 The source code for \texttt{CC3}, \texttt{calendrica-3.0.cl}, is made
 available electronically by the publisher, see \cite{calendar:calcal}.
