@@ -1,8 +1,46 @@
 # How to run PyCalCal #
-In order to use the pycalcal you need:
+
+# Generate code and documentation #
+
+In order to generate pycalcal code and docs you need:
 
    * a Python version equal to or greater than 2.5 and less than 3.0.
    * [mpmath](http://code.google.com/p/mpmath/)
+   * The following LaTeX packages:
+     - tlmgr install siunitx
+     - tlmgr install euro
+     - tlmgr install wasysym
+     - tlmgr install wasy
+     - tlmgr install ulem
+     - tlmgr install lettrine
+     - tlmgr install minifp
+     - tlmgr install textpath
+     - tlmgr install astro
+     - tlmgr install media9
+     - tlmgr install ocgx2
+     - tlmgr install epstopdf
+   * noweb, https://www.cs.tufts.edu/~nr/noweb/
+     Remenver to set TEXINPUTS accordinglt, i.e.
+     
+     ```
+     export TEXINPUTS=/usr/local/opt/noweb/tex/generic/noweb//:
+     ```
+   * asymptote, https://asymptote.sourceforge.io/
+   
+Generate the Makefile:
+
+```
+./makemake.sh
+```
+
+Make all:
+
+```
+# setting EPSTOPDF on the fly is only needed if it is not in your PATH
+EPSTOPDF=/Users/espin/Library/TinyTeX//bin/x86_64-darwin/epstopdf \
+   TEXINPUTS=/usr/local/opt/noweb/tex/generic/noweb//: \
+   make all
+```
 
 Then it is enough to place `pycalcal.py` file in any place where python can load it, i.e. your current working directory.
 

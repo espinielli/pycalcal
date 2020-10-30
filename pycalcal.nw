@@ -179,6 +179,7 @@ bindingoffset=5mm]{geometry}
 This document describes a \py~\cite{computer:language:python}
 implementation of the calendrical algorithms described in
 the book \textit{Calendrical Calculations}~\cite{calendar:calcal}.
+
 According to the authors, the book is \textit{the companion} text of
 the algorithms implemented in the \cl\ package \texttt{CC3}.
 The source code for \texttt{CC3}, \texttt{calendrica-3.0.cl}, is made
@@ -191,9 +192,8 @@ On the (long) way to complete this project, I experimented with
 Scons~\cite{scons}, Test-Driven Development~\cite{tdd} and
 web applications~\cite{google:appengine}.
 
-I tackled this task the Literate Programming
-way~\cite{literate:lp} using the \nw~tool.~\cite{literate:lps,
-noweb:distro}
+I tackled this task the Literate Programming way~\cite{literate:lp}
+using the \nw~tool.~\cite{literate:lps, noweb:distro}
 As such all code and documentation is generated from
 a single source file and prefixed with the following warning:
 <<generated code warning>>=
@@ -8492,6 +8492,7 @@ NODEFS=$(PREMARKUP)   | nodefs
 LATEX=latex
 PDFLATEX=pdflatex
 BIBTEX=bibtex
+EPSTOPSF=epstopdf
 
 # to be used only when there are multiple .nw files
 NOINDEX=noindex
@@ -8545,7 +8546,8 @@ NW_ALL=$(NW_MAIN) $(NW_SRC)
 	mptopdf --latex $*.mp
 
 .asy.pdf:
-	asy -tex pdflatex $*.asy
+	asy -epsdriver=ps2write $*.asy
+	$(EPSTOPDF) $*.eps --hires -o=$*.pdf
 
 .nw.gv:
 	$(NOTANGLE) -filter btdefn -R$*.gv - $(CPIF) $*.gv
@@ -8928,7 +8930,7 @@ clean:
 		pycalcal.idx *UnitTest.py *UnitTest_result.txt \
 		html/ calendrica/ pycalcal*.gz figure.mpx \
 		$$(ls | grep  "figure.[0-9][0-9]*") figure-*.pdf fig_*.pdf \
-		*.mps *mpx fig_*.0 SConstruct testSunset.cl
+		*.mps *mpx fig_*.0 SConstruct testSunset.cl fig_alt-az.eps
 
 # ask to remove all files not recognized by hg
 xclean: clean

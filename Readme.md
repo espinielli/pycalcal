@@ -28,6 +28,10 @@ Having said so, PyCalCal code is pretty well tested and usable.
 
 See '_STATUS_' file for further details.
 
+### Installation ###
+
+See Install.md
+
 ### Acknowledgements ###
 I want to thank:
 
