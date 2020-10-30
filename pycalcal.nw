@@ -452,7 +452,7 @@ def `ifloor(n):
 # naming it iround
 def `iround(n):
     """Return the whole part of m/n."""
-    from __builtin__ import round
+    from builtins import round
     return int(round(n))
 
 
@@ -876,7 +876,7 @@ These helper functions are used to deal with intervals and ranges of events:
 # see lines 502-510 in calendrica-3.0.cl
 def `list_range(ell, range):
     """Return those moments in list ell that occur in range 'range'."""
-    return filter(lambda x: is_in_range(x, range), ell)
+    return list(filter(lambda x: is_in_range(x, range), ell))
 
 # see lines 482-485 in calendrica-3.0.cl
 def `interval(t0, t1):
@@ -7057,43 +7057,44 @@ class `AppendixCTable1TestCaseBase():
                         'Friday': FRIDAY,
                         'Saturday': SATURDAY}
 
-        reader = csv.reader(open("dates1.csv", "rU"),
-                            delimiter=',',
-                            quoting=csv.QUOTE_NONE)
-        self.rd    = [] # Rata Die
-        self.wd    = [] # WeekDay
-        self.jd    = [] # Julian Day
-        self.mjd   = [] # Madified Julian Day
-        self.gd    = [] # Gregorian Date
-        self.isod  = [] # ISO Date
-        self.jdt   = [] # Julian DaTe
-        self.jrn   = [] # Julian Roman Name
-        self.ed    = [] # Egyptian Date
-        self.ad    = [] # Armenian Date
-        self.cd    = [] # Coptic Date
-
-        for row in reader:
-            self.rd.append(int(row[0]))
-            self.wd.append(self._dayOfWeek(row[1]))
-            self.jd.append(float(row[2]))
-            self.mjd.append(int(row[3]))
-            self.gd.append(
-                gregorian_date(int(row[4]), int(row[5]), int(row[6])))
-            self.isod.append(
-                iso_date(int(row[7]), int(row[8]), int(row[9])))
-            self.jdt.append(
-                julian_date(int(row[10]), int(row[11]), int(row[12])))
-            self.jrn.append(roman_date(int(row[13]),
-                                       int(row[14]),
-                                       int(row[15]),
-                                       int(row[16]),
-                                       self._romanLeap(row[17])))
-            self.ed.append(
-                egyptian_date(int(row[18]), int(row[19]), int(row[20])))
-            self.ad.append(
-                armenian_date(int(row[21]), int(row[22]), int(row[23])))
-            self.cd.append(
-                coptic_date(int(row[24]), int(row[25]), int(row[26])))
+        with open("dates1.csv", "r") as csvfile:
+            reader = csv.reader(csvfile,
+                                delimiter=',',
+                                quoting=csv.QUOTE_NONE)
+            self.rd    = [] # Rata Die
+            self.wd    = [] # WeekDay
+            self.jd    = [] # Julian Day
+            self.mjd   = [] # Madified Julian Day
+            self.gd    = [] # Gregorian Date
+            self.isod  = [] # ISO Date
+            self.jdt   = [] # Julian DaTe
+            self.jrn   = [] # Julian Roman Name
+            self.ed    = [] # Egyptian Date
+            self.ad    = [] # Armenian Date
+            self.cd    = [] # Coptic Date
+    
+            for row in reader:
+                self.rd.append(int(row[0]))
+                self.wd.append(self._dayOfWeek(row[1]))
+                self.jd.append(float(row[2]))
+                self.mjd.append(int(row[3]))
+                self.gd.append(
+                    gregorian_date(int(row[4]), int(row[5]), int(row[6])))
+                self.isod.append(
+                    iso_date(int(row[7]), int(row[8]), int(row[9])))
+                self.jdt.append(
+                    julian_date(int(row[10]), int(row[11]), int(row[12])))
+                self.jrn.append(roman_date(int(row[13]),
+                                           int(row[14]),
+                                           int(row[15]),
+                                           int(row[16]),
+                                           self._romanLeap(row[17])))
+                self.ed.append(
+                    egyptian_date(int(row[18]), int(row[19]), int(row[20])))
+                self.ad.append(
+                    armenian_date(int(row[21]), int(row[22]), int(row[23])))
+                self.cd.append(
+                    coptic_date(int(row[24]), int(row[25]), int(row[26])))
 
 
 class `AppendixCTable1TestCase(AppendixCTable1TestCaseBase, unittest.TestCase):
@@ -7231,47 +7232,48 @@ Bahai, Future Bahai, Mayan (Long count, Haab and Tzolkin), Aztec
 <<appendixCTable2Tests>>=
 class `AppendixCTable2TestCaseBase():
     def setUp(self):
-        reader = csv.reader(open("dates2.csv", "rU"),
-                            delimiter=',',
-                            quoting=csv.QUOTE_NONE)
-        self.rd    = [] # Rata Die
-        self.ed    = [] # Ethiopic Date
-        self.id    = [] # Islamic Date
-        self.io    = [] # Islamic Observational date
-        self.bd    = [] # Bahai Date
-        self.bf    = [] # Bahai Future date
-        self.mlc   = [] # Mayan Long Count
-        self.mh    = [] # Mayan Haab
-        self.mt    = [] # Mayan Tzolkin
-        self.ax    = [] # Aztec Xihuitl
-        self.at    = [] # Aztec Tonalpohualli
-
-        for row in reader:
-            self.rd.append(int(row[0]))
-            self.ed.append(
-                ethiopic_date(int(row[1]), int(row[2]), int(row[3])))
-            self.id.append(
-                islamic_date(int(row[4]), int(row[5]), int(row[6])))
-            self.io.append(
-                islamic_date(int(row[7]), int(row[8]), int(row[9])))
-            self.bd.append(
-                bahai_date(int(row[10]), int(row[11]), int(row[12]),
-                           int(row[13]), int(row[14])))
-            self.bf.append(
-                bahai_date(int(row[15]), int(row[16]), int(row[17]),
-                           int(row[18]), int(row[19])))
-            self.mlc.append(
-                mayan_long_count_date(int(row[20]), int(row[21]),
-                                      int(row[22]), int(row[23]),
-                                                  int(row[24])))
-            self.mh.append(
-                mayan_haab_date(int(row[25]), int(row[26])))
-            self.mt.append(
-                mayan_tzolkin_date(int(row[27]), int(row[28])))
-            self.ax.append(
-                aztec_xihuitl_date(int(row[29]), int(row[30])))
-            self.at.append(
-                aztec_tonalpohualli_date(int(row[31]), int(row[32])))
+        with open("dates2.csv", "r") as csvfile:
+            reader = csv.reader(csvfile,
+                                delimiter=',',
+                                quoting=csv.QUOTE_NONE)
+            self.rd    = [] # Rata Die
+            self.ed    = [] # Ethiopic Date
+            self.id    = [] # Islamic Date
+            self.io    = [] # Islamic Observational date
+            self.bd    = [] # Bahai Date
+            self.bf    = [] # Bahai Future date
+            self.mlc   = [] # Mayan Long Count
+            self.mh    = [] # Mayan Haab
+            self.mt    = [] # Mayan Tzolkin
+            self.ax    = [] # Aztec Xihuitl
+            self.at    = [] # Aztec Tonalpohualli
+    
+            for row in reader:
+                self.rd.append(int(row[0]))
+                self.ed.append(
+                    ethiopic_date(int(row[1]), int(row[2]), int(row[3])))
+                self.id.append(
+                    islamic_date(int(row[4]), int(row[5]), int(row[6])))
+                self.io.append(
+                    islamic_date(int(row[7]), int(row[8]), int(row[9])))
+                self.bd.append(
+                    bahai_date(int(row[10]), int(row[11]), int(row[12]),
+                               int(row[13]), int(row[14])))
+                self.bf.append(
+                    bahai_date(int(row[15]), int(row[16]), int(row[17]),
+                               int(row[18]), int(row[19])))
+                self.mlc.append(
+                    mayan_long_count_date(int(row[20]), int(row[21]),
+                                          int(row[22]), int(row[23]),
+                                                      int(row[24])))
+                self.mh.append(
+                    mayan_haab_date(int(row[25]), int(row[26])))
+                self.mt.append(
+                    mayan_tzolkin_date(int(row[27]), int(row[28])))
+                self.ax.append(
+                    aztec_xihuitl_date(int(row[29]), int(row[30])))
+                self.at.append(
+                    aztec_tonalpohualli_date(int(row[31]), int(row[32])))
 
  
 class `AppendixCTable2TestCase(AppendixCTable2TestCaseBase,
@@ -7375,54 +7377,55 @@ class `AppendixCTable3TestCaseBase():
         return False if c == 'f' else True
 
     def setUp(self):
-        reader = csv.reader(open("dates3.csv", "rU"),
-                            delimiter=',',
-                            quoting=csv.QUOTE_NONE)
-        self.rd    = []
-        self.hd    = [] # hebrew standard
-        self.ho    = [] # hebrew observational
-        self.je    = [] # julian easter
-        self.ge    = [] # gregorian easter
-        self.ae    = [] # astronomical easter
-        self.bd    = [] # balinese pawukon
-        self.pas   = [] # persian astronomical
-        self.par   = [] # persian arithmetic
-        self.fr    = [] # french original
-        self.frm   = [] # french modified
-
-        for row in reader:
-            self.rd.append(int(row[0]))
-            self.hd.append(hebrew_date(int(row[1]), int(row[2]), int(row[3])))
-            self.ho.append(hebrew_date(int(row[4]), int(row[5]), int(row[6])))
-            self.je.append(julian_date(int(row[7]), int(row[8]), int(row[9])))
-            self.ge.append(gregorian_date(int(row[10]),
-                                          int(row[11]),
-                                          int(row[12])))
-            self.ae.append(gregorian_date(int(row[13]),
-                                          int(row[14]),
-                                          int(row[15])))
-            self.bd.append(balinese_date(self._toBoolean(row[16]),
-                                          int(row[17]),
-                                          int(row[18]),
-                                          int(row[19]),
-                                          int(row[20]),
-                                          int(row[21]),
-                                          int(row[22]),
-                                          int(row[23]),
-                                          int(row[24]),
-                                          int(row[25])))
-            self.pas.append(gregorian_date(int(row[26]),
-                                          int(row[27]),
-                                          int(row[28])))
-            self.par.append(gregorian_date(int(row[29]),
-                                          int(row[30]),
-                                          int(row[31])))
-            self.fr.append(french_date(int(row[32]),
-                                       int(row[33]),
-                                       int(row[34])))
-            self.frm.append(french_date(int(row[35]),
-                                        int(row[36]),
-                                        int(row[37])))
+        with open("dates3.csv", "r") as csvfile:
+            reader = csv.reader(csvfile,
+                                delimiter=',',
+                                quoting=csv.QUOTE_NONE)
+            self.rd    = []
+            self.hd    = [] # hebrew standard
+            self.ho    = [] # hebrew observational
+            self.je    = [] # julian easter
+            self.ge    = [] # gregorian easter
+            self.ae    = [] # astronomical easter
+            self.bd    = [] # balinese pawukon
+            self.pas   = [] # persian astronomical
+            self.par   = [] # persian arithmetic
+            self.fr    = [] # french original
+            self.frm   = [] # french modified
+    
+            for row in reader:
+                self.rd.append(int(row[0]))
+                self.hd.append(hebrew_date(int(row[1]), int(row[2]), int(row[3])))
+                self.ho.append(hebrew_date(int(row[4]), int(row[5]), int(row[6])))
+                self.je.append(julian_date(int(row[7]), int(row[8]), int(row[9])))
+                self.ge.append(gregorian_date(int(row[10]),
+                                              int(row[11]),
+                                              int(row[12])))
+                self.ae.append(gregorian_date(int(row[13]),
+                                              int(row[14]),
+                                              int(row[15])))
+                self.bd.append(balinese_date(self._toBoolean(row[16]),
+                                              int(row[17]),
+                                              int(row[18]),
+                                              int(row[19]),
+                                              int(row[20]),
+                                              int(row[21]),
+                                              int(row[22]),
+                                              int(row[23]),
+                                              int(row[24]),
+                                              int(row[25])))
+                self.pas.append(gregorian_date(int(row[26]),
+                                              int(row[27]),
+                                              int(row[28])))
+                self.par.append(gregorian_date(int(row[29]),
+                                              int(row[30]),
+                                              int(row[31])))
+                self.fr.append(french_date(int(row[32]),
+                                           int(row[33]),
+                                           int(row[34])))
+                self.frm.append(french_date(int(row[35]),
+                                            int(row[36]),
+                                            int(row[37])))
 
  
 class `AppendixCTable3TestCase(AppendixCTable3TestCaseBase,
@@ -7541,57 +7544,58 @@ class `AppendixCTable4TestCaseBase():
         return False if c == 'f' else True
 
     def setUp(self):
-        reader = csv.reader(open("dates4.csv", "rU"),
-                            delimiter=',',
-                            quoting=csv.QUOTE_NONE)
-        self.rd    = []
-        self.cd    = [] # chinese date
-        self.cn    = [] # chinese day name
-        self.ms    = [] # major solar term
-        self.ohs   = [] # old hindu solar date
-        self.mhs   = [] # modern hindu solar date
-        self.ahs   = [] # astronomical hindu solar date
-        self.ohl   = [] # old hindu lunar date
-        self.mhl   = [] # modern hindu lunar date
-        self.ahl   = [] # astronomical hindu lunar date
-        self.td    = [] # tibetan date
-
-
-        for row in reader:
-            self.rd.append(int(row[0]))
-            self.cd.append(chinese_date(int(row[1]), int(row[2]), int(row[3]),
-                                        self._toBoolean(row[4]), int(row[5])))
-            self.cn.append([int(row[6]), int(row[7])])
-            self.ms.append(float(row[8]))
-            self.ohs.append(hindu_solar_date(int(row[9]),
-                                             int(row[10]),
-                                             int(row[11])))
-            self.mhs.append(hindu_solar_date(int(row[12]),
-                                             int(row[13]),
-                                             int(row[14])))
-            self.ahs.append(hindu_solar_date(int(row[15]),
-                                             int(row[16]),
-                                             int(row[17])))
-            self.ohl.append(old_hindu_lunar_date(int(row[18]),
-                                             int(row[19]),
-                                             self._toBoolean(row[20]),
-                                             int(row[21])))
-            self.mhl.append(hindu_lunar_date(int(row[22]),
-                                             int(row[23]),
-                                             self._toBoolean(row[24]),
-                                             int(row[25]),
-                                             self._toBoolean(row[26])))
-            self.ahl.append(hindu_lunar_date(int(row[27]),
-                                             int(row[28]),
-                                             self._toBoolean(row[29]),
-                                             int(row[30]),
-                                             self._toBoolean(row[31])))
-
-            self.td.append(tibetan_date(int(row[32]),
-                                        int(row[33]),
-                                        self._toBoolean(row[34]),
-                                        int(row[35]),
-                                        self._toBoolean(row[36])))
+        with open("dates4.csv", "r") as csvfile:
+            reader = csv.reader(csvfile,
+                                delimiter=',',
+                                quoting=csv.QUOTE_NONE)
+            self.rd    = []
+            self.cd    = [] # chinese date
+            self.cn    = [] # chinese day name
+            self.ms    = [] # major solar term
+            self.ohs   = [] # old hindu solar date
+            self.mhs   = [] # modern hindu solar date
+            self.ahs   = [] # astronomical hindu solar date
+            self.ohl   = [] # old hindu lunar date
+            self.mhl   = [] # modern hindu lunar date
+            self.ahl   = [] # astronomical hindu lunar date
+            self.td    = [] # tibetan date
+    
+    
+            for row in reader:
+                self.rd.append(int(row[0]))
+                self.cd.append(chinese_date(int(row[1]), int(row[2]), int(row[3]),
+                                            self._toBoolean(row[4]), int(row[5])))
+                self.cn.append([int(row[6]), int(row[7])])
+                self.ms.append(float(row[8]))
+                self.ohs.append(hindu_solar_date(int(row[9]),
+                                                 int(row[10]),
+                                                 int(row[11])))
+                self.mhs.append(hindu_solar_date(int(row[12]),
+                                                 int(row[13]),
+                                                 int(row[14])))
+                self.ahs.append(hindu_solar_date(int(row[15]),
+                                                 int(row[16]),
+                                                 int(row[17])))
+                self.ohl.append(old_hindu_lunar_date(int(row[18]),
+                                                 int(row[19]),
+                                                 self._toBoolean(row[20]),
+                                                 int(row[21])))
+                self.mhl.append(hindu_lunar_date(int(row[22]),
+                                                 int(row[23]),
+                                                 self._toBoolean(row[24]),
+                                                 int(row[25]),
+                                                 self._toBoolean(row[26])))
+                self.ahl.append(hindu_lunar_date(int(row[27]),
+                                                 int(row[28]),
+                                                 self._toBoolean(row[29]),
+                                                 int(row[30]),
+                                                 self._toBoolean(row[31])))
+    
+                self.td.append(tibetan_date(int(row[32]),
+                                            int(row[33]),
+                                            self._toBoolean(row[34]),
+                                            int(row[35]),
+                                            self._toBoolean(row[36])))
  
 class `AppendixCTable4TestCase(AppendixCTable4TestCaseBase,
                                unittest.TestCase):
@@ -7711,32 +7715,34 @@ class `AppendixCTable5TestCaseBase():
         return False if c == 'f' else True
 
     def setUp(self):
-        reader = csv.reader(open("dates5.csv", "rU"),
-                            delimiter=',',
-                            quoting=csv.QUOTE_NONE)
-        self.rd    = []
-        self.sl    = [] # solar longitude
-        self.nse   = [] # next solstice/equinox
-        self.ll    = [] # lunar longitude
-        self.nnm   = [] # next new moon
-        self.dip   = [] # dawn in Paris
-        self.sij   = [] # sunset in Jerusalem
-
-        for row in reader:
-            self.rd.append(int(row[0]))
-            self.sl.append(float(row[1]))
-            self.nse.append(float(row[2]))
-            self.ll.append(float(row[3]))
-            #self.nnm.append(float(row[4])) # read from errata file
-            self.dip.append(row[5])
-            self.sij.append(row[9])
-
-        reader1 = csv.reader(open("dates5.errata.csv", "rU"),
-                            delimiter=',',
-                            quoting=csv.QUOTE_NONE)
-
-        for row in reader1:
-            self.nnm.append(float(row[1]))
+        with open("dates5.csv", "r") as csvfile:
+            reader = csv.reader(csvfile,
+                                delimiter=',',
+                                quoting=csv.QUOTE_NONE)
+            self.rd    = []
+            self.sl    = [] # solar longitude
+            self.nse   = [] # next solstice/equinox
+            self.ll    = [] # lunar longitude
+            self.nnm   = [] # next new moon
+            self.dip   = [] # dawn in Paris
+            self.sij   = [] # sunset in Jerusalem
+    
+            for row in reader:
+                self.rd.append(int(row[0]))
+                self.sl.append(float(row[1]))
+                self.nse.append(float(row[2]))
+                self.ll.append(float(row[3]))
+                #self.nnm.append(float(row[4])) # read from errata file
+                self.dip.append(row[5])
+                self.sij.append(row[9])
+    
+            with open("dates5.errata.csv", "r") as csvfile1:
+                reader1 = csv.reader(csvfile1,
+                                    delimiter=',',
+                                    quoting=csv.QUOTE_NONE)
+        
+                for row in reader1:
+                    self.nnm.append(float(row[1]))
 
  
 class `AppendixCTable5TestCase(AppendixCTable5TestCaseBase,
@@ -8925,7 +8931,7 @@ clean:
 	rm -fR pycalcal.tex $(NW_MAIN:.nw=.py) pycalcaltests.py *.dvi *.aux *.log \
 		*.blg *.toc *.bbl *~ *.pyc *.defs *.nwi premarkup prefix \
 		excerpt dates?.csv blankexcerpt blankpremarkup \
-		trasformLatexDates2Cvs pycalcal.pdf extractcc3signatures \
+		trasformLatexDates2Cvs extractcc3signatures \
 		extractcalcalsignatures pycalcal.ind pycalcal.out pycalcal.ilg \
 		pycalcal.idx *UnitTest.py *UnitTest_result.txt \
 		html/ calendrica/ pycalcal*.gz figure.mpx \
@@ -9128,20 +9134,21 @@ import csv
 
 rd = []
 ho = []
-reader = csv.reader(open("dates3.csv", "rU"),
-                    delimiter=',',
-                    quoting=csv.QUOTE_NONE)
-for row in reader:
-    rd.append(int(row[0]))
-    ho.append(hebrew_date(int(row[4]), int(row[5]), int(row[6])))
-
-
-for i in range(len(rd)):
-    # observational
-    print 'R.D.= %d; oh_from_fxd=%s; fxd_from_oh=%d; book=%s' % (rd[i],
-                            observational_hebrew_from_fixed(rd[i]),
-                            fixed_from_observational_hebrew(ho[i]),
-                                              ho[i])
+with open('dates3.csv', 'r') as csvfile:
+     reader = csv.reader(csvfile,
+                         delimiter=',',
+                         quoting=csv.QUOTE_NONE)
+    for row in reader:
+        rd.append(int(row[0]))
+        ho.append(hebrew_date(int(row[4]), int(row[5]), int(row[6])))
+    
+    
+    for i in range(len(rd)):
+        # observational
+        print 'R.D.= %d; oh_from_fxd=%s; fxd_from_oh=%d; book=%s' % (rd[i],
+                                 observational_hebrew_from_fixed(rd[i]),
+                                 fixed_from_observational_hebrew(ho[i]),
+                                                   ho[i])
 
 @
 %%%%%%%%%%%%%%%%%%%%%%%%%

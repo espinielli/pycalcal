@@ -80,7 +80,7 @@ def ifloor(n):
 # naming it iround
 def iround(n):
     """Return the whole part of m/n."""
-    from __builtin__ import round
+    from builtins import round
     return int(round(n))
 
 
@@ -337,7 +337,7 @@ def angle_from_degrees(alpha):
 # see lines 502-510 in calendrica-3.0.cl
 def list_range(ell, range):
     """Return those moments in list ell that occur in range 'range'."""
-    return filter(lambda x: is_in_range(x, range), ell)
+    return list(filter(lambda x: is_in_range(x, range), ell))
 
 # see lines 482-485 in calendrica-3.0.cl
 def interval(t0, t1):
