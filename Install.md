@@ -20,7 +20,7 @@ In order to generate pycalcal code and docs you need:
      - tlmgr install ocgx2
      - tlmgr install epstopdf
    * noweb, https://www.cs.tufts.edu/~nr/noweb/
-     Remenver to set TEXINPUTS accordinglt, i.e.
+     Remember to set TEXINPUTS accordingly, i.e.
      
      ```
      export TEXINPUTS=/usr/local/opt/noweb/tex/generic/noweb//:
