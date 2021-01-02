@@ -19,6 +19,7 @@ In order to generate pycalcal code and docs you need:
      - tlmgr install media9
      - tlmgr install ocgx2
      - tlmgr install epstopdf
+     - tlmgr install listings
    * noweb, https://www.cs.tufts.edu/~nr/noweb/
      Remember to set TEXINPUTS accordingly, i.e.
      
