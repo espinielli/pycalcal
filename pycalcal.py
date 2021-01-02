@@ -494,6 +494,23 @@ NOVEMBER = 11
 # see lines 652-655 in calendrica-3.0.cl
 DECEMBER = 12
 
+GREGORIAN_MONTHS_OF_YEAR_NAMES = {
+    0        : "BOGUS",
+    JANUARY  : "January",
+    FEBRUARY : "February",
+    MARCH    : "March",
+    APRIL    : "April",
+    MAY      : "May",
+    JUNE     : "June",
+    JULY     : "July",
+    AUGUST   : "August",
+    SEPTEMBER: "September",
+    OCTOBER  : "October",
+    NOVEMBER : "November",
+    DECEMBER : "December"
+}
+
+
 # see lines 657-663 in calendrica-3.0.cl
 def is_gregorian_leap_year(g_year):
     """Return True if Gregorian year 'g_year' is leap."""
@@ -753,7 +770,7 @@ def unlucky_fridays_in_range(range):
     else:
         return []
 
-GREGORIAN_MONTHS_LENTHS = {
+GREGORIAN_MONTHS_LENGTHS = {
     JANUARY   : 31,
     FEBRUARY  : 28,
     MARCH     : 31,
@@ -773,7 +790,7 @@ def gregorian_last_day_of_month(g_date):
     return gregorian_date(g_date[0], g_date[1], days)
 
 def gregorian_month_lenth(g_date):
-    days = GREGORIAN_MONTHS_LENTHS[g_date[1]]
+    days = GREGORIAN_MONTHS_LENGTHS[g_date[1]]
     # February of a leap year has 28 days
     if (g_date[1] == 2 and is_gregorian_leap_year(g_date[0])):
         days = 29
