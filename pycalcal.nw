@@ -89,6 +89,13 @@ bindingoffset=5mm]{geometry}
 % drop down initial letter
 \usepackage{lettrine}
 
+% for code highlight
+\usepackage{listings}
+\lstdefinestyle{espinstyle}{
+    basicstyle=\ttfamily\small,
+}
+\lstset{style=espinstyle}
+
 %\usepackage{appendix}
 
 % figures template
@@ -188,7 +195,7 @@ available electronically by the publisher, see \cite{calendar:calcal}.
 I provide full reference to the original \cl\ and credit (and deep
 respect) to its authors, Prof.s~Dershowitz and Reingold.
 
-On the (long) way to complete this project, I experimented with
+On the (long) way to completing this project, I experimented with
 Scons~\cite{scons}, Test-Driven Development~\cite{tdd} and
 web applications~\cite{google:appengine}.
 
@@ -200,6 +207,47 @@ a single source file and prefixed with the following warning:
 AUTOMATICALLY GENERATED FROM pycalcal.nw: ANY CHANGES WILL BE OVERWRITTEN.
 
 @ 
+
+\section{Usage and examples}
+\label{sec:usage}
+This section is about providing some examples of use of \pcc.
+
+
+\subsection{Gregorian calendar examples}
+New year's week day name for (Gregorian) 2021:
+\begin{lstlisting}[language=Python]
+>>> DAYS_OF_WEEK_NAMES[day_of_week_from_fixed(gregorian_new_year(2021))]
+'Friday'
+\end{lstlisting}
+
+List Friday 13th in (Gragorian) 2026:
+\begin{lstlisting}[language=Python]
+>>> for d in unlucky_fridays_in_range(gregorian_year_range(2026)):
+...     g = gregorian_from_fixed(d)
+...     print('Friday 13th %s %s' % (GREGORIAN_MONTHS_OF_YEAR_NAMES[g[1]], g[0]))
+...
+Friday 13th November 2026
+Friday 13th March 2026
+Friday 13th February 2026
+\end{lstlisting}
+
+Pay day, i.e. last Friday of the month, in 2025:
+\begin{lstlisting}[language=Python]
+>>> for d in unlucky_fridays_in_range(gregorian_year_range(2026)):
+...     g = gregorian_from_fixed(d)
+...     print('Friday 13th %s %s' % (GREGORIAN_MONTHS_OF_YEAR_NAMES[g[1]], g[0]))
+...
+Friday 13th November 2026
+Friday 13th March 2026
+Friday 13th February 2026
+\end{lstlisting}
+
+
+\subsection{Chinese calendar examples}
+\subsection{Ebrew calendar examples}
+\subsection{Islamic calendar examples}
+\subsection{Civil and religious festivities examples}
+
 
 \section{Structure}
 \label{sec:structure}
@@ -353,6 +401,7 @@ integers separated by a dot, '.' which stand for
 \begin{quote}
 @<major version>.<minor version>.<increment>
 \end{quote}
+
 @ Then version number \texttt{0.9.2} means revision $2$ of project
 version $0.9$.
 <<project version>>=
@@ -970,6 +1019,7 @@ class BasicCodeTestCase(unittest.TestCase):
 <<gregorian leap year function>>
 <<gregorian conversion functions>>
 <<gregorian year start and end>>
+<<gregorian helpers>>
 
 <<gregorian date and epoch>>=
 # see lines 586-589 in calendrica-3.0.cl
@@ -1148,7 +1198,6 @@ def `alt_gregorian_year_from_fixed(date):
               quotient(approx, 400))
     return approx if (date < start) else (approx + 1)
 
-
 # see lines 843-847 in calendrica-3.0.cl
 def `independence_day(g_year):
     """Return the fixed date of United States Independence Day in
@@ -1256,14 +1305,14 @@ def `advent(g_year):
                                                             30)))
 
 # see lines 953-957 in calendrica-3.0.cl
-def `epiphany(g_year):
+def `epiphany_us(g_year):
     """Return the fixed date of Epiphany in U.S. in Gregorian year 'g_year'
     (the first Sunday after January 1)."""
     return first_kday(SUNDAY, gregorian_date(g_year, JANUARY, 2))
 
-def `epiphany_it(g_year):
-    """Return fixed date of Epiphany in Italy in Gregorian year 'g_year'."""
-    return gregorian_date(g_year, JANUARY, 6)
+def `epiphany(g_year):
+    """Return fixed date of Epiphany in the world (except USA) in Gregorian year 'g_year'."""
+    return fixed_from_gregorian(gregorian_date(g_year, JANUARY, 6))
 
 # see lines 959-974 in calendrica-3.0.cl
 def `unlucky_fridays_in_range(range):
@@ -1280,6 +1329,36 @@ def `unlucky_fridays_in_range(range):
     else:
         return []
 
+@
+
+Some utility functions:
+
+<<gregorian helpers>>=
+GREGORIAN_MONTHS_LENTHS = {
+    JANUARY   : 31,
+    FEBRUARY  : 28,
+    MARCH     : 31,
+    APRIL     : 30,
+    MAY       : 31,
+    JUNE      : 30,
+    JULY      : 31,
+    AUGUST    : 31,
+    SEPTEMBER : 30,
+    OCTOBER   : 31,
+    NOVEMBER  : 30,
+    DECEMBER  : 31}
+
+def `gregorian_last_day_of_month(g_date):
+    """Return the last day of the month for Gregorian date 'g_date'."""
+    days = gregorian_month_lenth(g_date)
+    return gregorian_date(g_date[0], g_date[1], days)
+
+def `gregorian_month_lenth(g_date):
+    days = GREGORIAN_MONTHS_LENTHS[g_date[1]]
+    # February of a leap year has 28 days
+    if (g_date[1] == 2 and is_gregorian_leap_year(g_date[0])):
+        days = 29
+    return days
 
 
 <<gregorian calendar unit test>>=

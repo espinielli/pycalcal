@@ -622,7 +622,6 @@ def alt_gregorian_year_from_fixed(date):
               quotient(approx, 400))
     return approx if (date < start) else (approx + 1)
 
-
 # see lines 843-847 in calendrica-3.0.cl
 def independence_day(g_year):
     """Return the fixed date of United States Independence Day in
@@ -730,14 +729,14 @@ def advent(g_year):
                                                             30)))
 
 # see lines 953-957 in calendrica-3.0.cl
-def epiphany(g_year):
+def epiphany_us(g_year):
     """Return the fixed date of Epiphany in U.S. in Gregorian year 'g_year'
     (the first Sunday after January 1)."""
     return first_kday(SUNDAY, gregorian_date(g_year, JANUARY, 2))
 
-def epiphany_it(g_year):
-    """Return fixed date of Epiphany in Italy in Gregorian year 'g_year'."""
-    return gregorian_date(g_year, JANUARY, 6)
+def epiphany(g_year):
+    """Return fixed date of Epiphany in the world (except USA) in Gregorian year 'g_year'."""
+    return fixed_from_gregorian(gregorian_date(g_year, JANUARY, 6))
 
 # see lines 959-974 in calendrica-3.0.cl
 def unlucky_fridays_in_range(range):
@@ -754,6 +753,31 @@ def unlucky_fridays_in_range(range):
     else:
         return []
 
+GREGORIAN_MONTHS_LENTHS = {
+    JANUARY   : 31,
+    FEBRUARY  : 28,
+    MARCH     : 31,
+    APRIL     : 30,
+    MAY       : 31,
+    JUNE      : 30,
+    JULY      : 31,
+    AUGUST    : 31,
+    SEPTEMBER : 30,
+    OCTOBER   : 31,
+    NOVEMBER  : 30,
+    DECEMBER  : 31}
+
+def gregorian_last_day_of_month(g_date):
+    """Return the last day of the month for Gregorian date 'g_date'."""
+    days = gregorian_month_lenth(g_date)
+    return gregorian_date(g_date[0], g_date[1], days)
+
+def gregorian_month_lenth(g_date):
+    days = GREGORIAN_MONTHS_LENTHS[g_date[1]]
+    # February of a leap year has 28 days
+    if (g_date[1] == 2 and is_gregorian_leap_year(g_date[0])):
+        days = 29
+    return days
 
 
 
