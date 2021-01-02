@@ -89,13 +89,6 @@ bindingoffset=5mm]{geometry}
 % drop down initial letter
 \usepackage{lettrine}
 
-% for code highlight
-\usepackage{listings}
-\lstdefinestyle{espinstyle}{
-    basicstyle=\ttfamily\small,
-}
-\lstset{style=espinstyle}
-
 %\usepackage{appendix}
 
 % figures template
@@ -159,6 +152,37 @@ bindingoffset=5mm]{geometry}
 
 %\setcounter{tocdepth}{0} % indice fino a section
 
+
+% for code highlight
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{espin}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+
+\lstset{style=espin}
 
 \begin{document}
 \maketitle
