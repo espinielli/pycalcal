@@ -5150,9 +5150,9 @@ def hindu_tithi_occur(l_month, tithi, tee, l_year):
     approx = hindu_date_occur(l_month, ifloor(tithi), l_year)
     lunar  = hindu_lunar_day_at_or_after(tithi, approx - 2)
     ttry    = fixed_from_moment(lunar)
-    tee_h  = standard_from_sundial(ttry + tee, UJJAIN)
+    tee_h  = standard_from_sundial(ttry + tee, HINDU_LOCATION)
     if ((lunar <= tee_h) or
-        (hindu_lunar_phase(standard_from_sundial(ttry + 1 + tee, UJJAIN)) >
+        (hindu_lunar_phase(standard_from_sundial(ttry + 1 + tee, HINDU_LOCATION)) >
          (12 * tithi))):
         return ttry
     else:
